@@ -1,4 +1,4 @@
-package polako.cloud.clotho.presentation
+package polako.cloud.clotho.presentation.main_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,17 +8,24 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import polako.cloud.clotho.navigation.Routes
 import polako.cloud.clotho.ui.composables.MainMenuBgCard
 import polako.cloud.clotho.ui.theme.ClothoTheme
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navController: NavController,
+    viewModel: MainMenuViewModel = hiltViewModel()
+) {
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
 
     Box(
@@ -43,7 +50,7 @@ fun MainScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { },
+                onClick = { navController.navigate(Routes.SESSION_SETUP) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
@@ -56,20 +63,12 @@ fun MainScreen() {
                 )
             ) {
                 Text(
-                    text = "Start Session",
+                    text = "Focus",
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    ClothoTheme {
-        MainScreen()
     }
 }
