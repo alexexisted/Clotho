@@ -13,7 +13,7 @@ private val DarkColorScheme = darkColorScheme(
     background = Jet,
     surface = Platinum,
     error = Poppy,
-    scrim = DartGreen
+    inversePrimary = DartGreen
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -23,7 +23,7 @@ private val LightColorScheme = lightColorScheme(
     background = Jet,
     surface = Platinum,
     error = Poppy,
-    scrim = DartGreen
+    inversePrimary = DartGreen
 
 
     /* Other default colors to override

@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import polako.cloud.clotho.domain.ActivityType
+import polako.cloud.clotho.domain.model.ActivityType
 
 @Composable
 fun ActivityItem(

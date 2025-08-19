@@ -62,7 +62,11 @@ fun SessionSetupScreen(
                     ActivityItem(
                         activity = activityType,
                         onSelected = { viewModel.onActivityTypeSelected(activityType) }
-                    ) { }
+                    ) { 
+                        // Set the selected activity and navigate to focus screen
+                        viewModel.onActivityTypeSelected(activityType)
+                        navController.navigate(polako.cloud.clotho.navigation.Routes.FOCUS_SCREEN)
+                    }
                 }
             }
         }
