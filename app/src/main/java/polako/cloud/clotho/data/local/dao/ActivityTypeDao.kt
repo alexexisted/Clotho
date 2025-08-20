@@ -2,6 +2,7 @@ package polako.cloud.clotho.data.local.dao
 
 import androidx.room.*
 import polako.cloud.clotho.data.local.entity.ActivityTypeEntity
+import polako.cloud.clotho.domain.model.ActivityType
 
 @Dao
 interface ActivityTypeDao {
@@ -16,6 +17,9 @@ interface ActivityTypeDao {
 
     @Query("SELECT * FROM activity_type WHERE id = :id")
     suspend fun getActivityTypeById(id: Long): ActivityTypeEntity?
+
+    @Query("SELECT * FROM activity_type")
+    suspend fun getAllActivities() : List<ActivityTypeEntity>
 
     @Query("DELETE FROM activity_type")
     suspend fun deleteAllActivityTypes()

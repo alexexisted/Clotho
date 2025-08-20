@@ -19,7 +19,7 @@ data class ActivityTypeEntity(
     }
 
     companion object {
-        fun fromDomainModel(activityType: ActivityType, id: Long = 0): ActivityTypeEntity {
+        fun fromDomainModelToEntity(activityType: ActivityType, id: Long = 0): ActivityTypeEntity {
             return ActivityTypeEntity(
                 id = id,
                 name = activityType.name,

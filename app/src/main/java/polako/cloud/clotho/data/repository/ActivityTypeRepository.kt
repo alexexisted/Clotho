@@ -11,5 +11,7 @@ interface ActivityTypeRepository {
 
     suspend fun getActivityTypeById(id: Long): ActivityType?
 
+    suspend fun getAllActivities(): List<ActivityType>
+
     suspend fun deleteAllActivityTypes()
 }

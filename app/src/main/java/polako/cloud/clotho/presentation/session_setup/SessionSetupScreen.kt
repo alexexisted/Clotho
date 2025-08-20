@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,8 +59,7 @@ fun SessionSetupScreen(
                     ActivityItem(
                         activity = activityType,
                         onSelected = { viewModel.onActivityTypeSelected(activityType) }
-                    ) { 
-                        // Set the selected activity and navigate to focus screen
+                    ) {
                         viewModel.onActivityTypeSelected(activityType)
                         navController.navigate(polako.cloud.clotho.navigation.Routes.FOCUS_SCREEN)
                     }
