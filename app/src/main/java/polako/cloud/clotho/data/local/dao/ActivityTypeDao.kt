@@ -18,6 +18,9 @@ interface ActivityTypeDao {
     @Query("SELECT * FROM activity_type WHERE id = :id")
     suspend fun getActivityTypeById(id: Long): ActivityTypeEntity?
 
+    @Query("SELECT * FROM activity_type WHERE name = :name")
+    suspend fun getActivityTypeByName(name: String): ActivityTypeEntity
+
     @Query("SELECT * FROM activity_type")
     suspend fun getAllActivities() : List<ActivityTypeEntity>
 

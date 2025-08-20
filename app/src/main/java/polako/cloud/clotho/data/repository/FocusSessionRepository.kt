@@ -1,6 +1,5 @@
 package polako.cloud.clotho.data.repository
 
-import kotlinx.coroutines.flow.Flow
 import polako.cloud.clotho.domain.model.FocusSession
 
 interface FocusSessionRepository {
@@ -10,7 +9,7 @@ interface FocusSessionRepository {
 
     suspend fun deleteFocusSession(focusSession: FocusSession)
 
-    fun getAllSessions(): Flow<List<FocusSession>>
+    fun getAllSessions(): List<FocusSession>
 
     suspend fun getSessionById(sessionId: Long): FocusSession?
 
