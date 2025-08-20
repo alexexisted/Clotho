@@ -16,6 +16,7 @@ import polako.cloud.clotho.data.local.dao.ActivityTypeDao
 import polako.cloud.clotho.data.local.dao.FocusSessionDao
 import polako.cloud.clotho.data.local.entity.ActivityTypeEntity
 import polako.cloud.clotho.data.local.entity.FocusSessionEntity
+import polako.cloud.clotho.domain.model.ActivityType
 import java.time.Duration
 import java.time.LocalDateTime
 
@@ -53,6 +54,19 @@ class AppDatabaseTest {
         assertNotNull(retrievedActivityType)
         assertEquals("Work", retrievedActivityType?.name)
         assertEquals(123, retrievedActivityType?.iconRes)
+    }
+
+    @Test
+    fun testGetActivityIdByName() = runBlocking {
+        val activityType = ActivityType(
+            name = "Work",
+            icon = 123
+        )
+
+        val id = activityTypeDao.getActivityTypeByName(activityType.name).id
+
+        assertNotNull(id)
+
     }
 
     @Test

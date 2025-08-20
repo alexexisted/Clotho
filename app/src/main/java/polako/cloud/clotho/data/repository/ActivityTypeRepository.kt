@@ -1,5 +1,6 @@
 package polako.cloud.clotho.data.repository
 
+import polako.cloud.clotho.data.local.entity.ActivityTypeEntity
 import polako.cloud.clotho.domain.model.ActivityType
 
 interface ActivityTypeRepository {
@@ -10,6 +11,8 @@ interface ActivityTypeRepository {
     suspend fun deleteActivityType(activityType: ActivityType, id: Long)
 
     suspend fun getActivityTypeById(id: Long): ActivityType?
+
+    suspend fun getActivityTypeByName(name: String): Long
 
     suspend fun getAllActivities(): List<ActivityType>
 

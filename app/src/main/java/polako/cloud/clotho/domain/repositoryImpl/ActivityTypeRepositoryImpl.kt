@@ -26,6 +26,11 @@ class ActivityTypeRepositoryImpl @Inject constructor(
         return activityTypeDao.getActivityTypeById(id)?.toDomainModel()
     }
 
+    override suspend fun getActivityTypeByName(name: String): Long {
+        val activity =  activityTypeDao.getActivityTypeByName(name)
+        return activity.id
+    }
+
     override suspend fun getAllActivities(): List<ActivityType> {
         return activityTypeDao.getAllActivities().map { it.toDomainModel() }
     }

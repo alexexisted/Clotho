@@ -98,7 +98,7 @@ class FocusViewModel @Inject constructor(
     private fun saveFocusSession(activity: ActivityType, elapsedTimeMillis: Long) {
         viewModelScope.launch {
             try {
-                val activityId = saveActivityAndGetId(activity)
+                val activityId = getActivityId(activity)
 
                 val now = LocalDateTime.now()
                 val duration = Duration.ofMillis(elapsedTimeMillis)
@@ -118,8 +118,8 @@ class FocusViewModel @Inject constructor(
         }
     }
     
-    private suspend fun saveActivityAndGetId(activity: ActivityType): Long {
-        return activityTypeRepository.insertActivityType(activity)
+    private suspend fun getActivityId(activity: ActivityType): Long {
+        return activityTypeRepository.getActivityTypeByName(activity.name)
     }
 
 }

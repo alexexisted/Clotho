@@ -26,7 +26,7 @@ interface FocusSessionDao {
     suspend fun delete(focusSession: FocusSessionEntity)
 
     @Query("SELECT * FROM focus_session")
-    fun getAllSessions(): Flow<List<FocusSessionEntity>>
+    fun getAllSessions(): List<FocusSessionEntity>
 
     @Query("SELECT * FROM focus_session WHERE sessionId = :sessionId")
     suspend fun getSessionById(sessionId: Long): FocusSessionEntity?
