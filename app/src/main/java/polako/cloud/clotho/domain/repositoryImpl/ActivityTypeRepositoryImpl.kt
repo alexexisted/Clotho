@@ -11,19 +11,23 @@ class ActivityTypeRepositoryImpl @Inject constructor(
 ) : ActivityTypeRepository {
 
     override suspend fun insertActivityType(activityType: ActivityType): Long {
-        return activityTypeDao.insert(ActivityTypeEntity.fromDomainModel(activityType))
+        return activityTypeDao.insert(ActivityTypeEntity.fromDomainModelToEntity(activityType))
     }
 
     override suspend fun updateActivityType(activityType: ActivityType, id: Long) {
-        activityTypeDao.update(ActivityTypeEntity.fromDomainModel(activityType, id))
+        activityTypeDao.update(ActivityTypeEntity.fromDomainModelToEntity(activityType, id))
     }
 
     override suspend fun deleteActivityType(activityType: ActivityType, id: Long) {
-        activityTypeDao.delete(ActivityTypeEntity.fromDomainModel(activityType, id))
+        activityTypeDao.delete(ActivityTypeEntity.fromDomainModelToEntity(activityType, id))
     }
 
     override suspend fun getActivityTypeById(id: Long): ActivityType? {
         return activityTypeDao.getActivityTypeById(id)?.toDomainModel()
+    }
+
+    override suspend fun getAllActivities(): List<ActivityType> {
+        return activityTypeDao.getAllActivities().map { it.toDomainModel() }
     }
 
     override suspend fun deleteAllActivityTypes() {
