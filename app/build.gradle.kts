@@ -4,8 +4,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.ksp)
 }
 
+ksp {
+    arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+}
 android {
     namespace = "polako.cloud.clotho"
     compileSdk = 36
@@ -54,6 +58,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.dagger.hilt.navigation)
+
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.coroutines)
+    ksp(libs.androidx.room.ksp)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

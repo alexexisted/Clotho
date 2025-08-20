@@ -11,13 +11,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import polako.cloud.clotho.data.repository.ActivityTypeRepository
+import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.ActivityManager
 import polako.cloud.clotho.domain.model.ActivityType
+import polako.cloud.clotho.domain.model.FocusSession
+import java.time.Duration
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class FocusViewModel @Inject constructor(
-    private val activityManager: ActivityManager
+    private val activityManager: ActivityManager,
+    private val focusSessionRepository: FocusSessionRepository,
+    private val activityTypeRepository: ActivityTypeRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FocusUiState())
@@ -68,6 +75,9 @@ class FocusViewModel @Inject constructor(
     }
 
     private fun stopTimer() {
+        val currentState = _uiState.value
+        val elapsedTime = currentState.elapsedTimeMillis
+        
         _uiState.update {
             it.copy(
                 isRunning = false,
@@ -77,6 +87,39 @@ class FocusViewModel @Inject constructor(
             )
         }
         timerJob?.cancel()
+
+        currentState.activity?.let { activity ->
+            saveFocusSession(activity, elapsedTime)
+        }
+
+
+    }
+    
+    private fun saveFocusSession(activity: ActivityType, elapsedTimeMillis: Long) {
+        viewModelScope.launch {
+            try {
+                val activityId = saveActivityAndGetId(activity)
+
+                val now = LocalDateTime.now()
+                val duration = Duration.ofMillis(elapsedTimeMillis)
+                val startTime = now.minus(duration)
+                
+                val focusSession = FocusSession(
+                    activityId = activityId,
+                    startTime = startTime,
+                    endTime = now,
+                    duration = duration
+                )
+                
+                focusSessionRepository.insertFocusSession(focusSession)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+    
+    private suspend fun saveActivityAndGetId(activity: ActivityType): Long {
+        return activityTypeRepository.insertActivityType(activity)
     }
 
 }
