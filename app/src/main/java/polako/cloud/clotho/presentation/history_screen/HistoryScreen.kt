@@ -17,10 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import polako.cloud.clotho.domain.model.FocusSession
-import polako.cloud.clotho.ui.composables.SessionCard
+import polako.cloud.clotho.ui.composables.SessionHistoryCard
 
 @Composable
 fun HistoryScreen(
@@ -86,7 +85,7 @@ fun SessionHistoryGrid(
         modifier = modifier.fillMaxSize()
     ) {
         items(sessions) { session ->
-            SessionCard(session = session)
+            SessionHistoryCard(session = session)
         }
     }
 }
