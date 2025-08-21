@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Clotho" parent="android:Theme.Material.Light.NoActionBar"/>
+    <style name="Theme.Clotho" parent="android:Theme.Material.Light.NoActionBar.Overscan"/>
 </resources>
+
+<!--<resources>-->
+<!--<style name="Theme.Clotho" parent="android:Theme.Material.Light.NoActionBar">-->
+<!--    &lt;!&ndash; Make status and nav bar transparent &ndash;&gt;-->
+<!--    <item name="android:statusBarColor">@android:color/transparent</item>-->
+<!--    <item name="android:navigationBarColor">@android:color/white</item>-->
+
+<!--    &lt;!&ndash; Optional: light/dark icon control &ndash;&gt;-->
+<!--    <item name="android:windowLightStatusBar">true</item>-->
+<!--    <item name="android:windowLightNavigationBar">true</item>-->
+
+<!--    &lt;!&ndash; Allow drawing behind system bars &ndash;&gt;-->
+<!--    <item name="android:windowTranslucentStatus">true</item>-->
+<!--    <item name="android:windowTranslucentNavigation">true</item>-->
+<!--</style>-->
+<!--</resources>-->
