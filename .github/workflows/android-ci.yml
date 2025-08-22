@@ -1,0 +1,29 @@
+name: Build mommy
+
+on:
+  pull_request:
+    branches: [mommy(prod-ready)]
+    types: [closed]
+
+jobs:
+  build:
+    if: |
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'mommy(prod-ready)' &&
+      github.event.pull_request.head.ref == 'test'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Grant Execute Permission
+        run: chmod +x gradlew
+
+      - name: Build APK
+        run: ./gradlew assembleRelease
