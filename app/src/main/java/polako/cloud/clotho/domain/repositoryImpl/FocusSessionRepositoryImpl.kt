@@ -6,6 +6,7 @@ import polako.cloud.clotho.data.local.entity.FocusSessionEntity
 import polako.cloud.clotho.data.local.entity.toFocusSessionUIModel
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.FocusSession
+import polako.cloud.clotho.domain.model.FocusSessionUIModel
 import javax.inject.Inject
 
 class FocusSessionRepositoryImpl @Inject constructor(
@@ -43,6 +44,19 @@ class FocusSessionRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAllSessions() {
         focusSessionDao.deleteAllSessions()
+    }
+    
+    override suspend fun getAllSessionsWithActivity(): List<FocusSession> {
+        return focusSessionDao.getAllSessionsWithActivity().map { it.toFocusSession() }
+    }
+    
+    override suspend fun getAllSessionsAsUIModels(): List<FocusSessionUIModel> {
+        return focusSessionDao.getAllSessionsWithActivity().map { it.toFocusSessionUIModel() }
+    }
+    
+    override suspend fun getSessionWithActivityById(sessionId: Long): FocusSession? {
+        val sessionWithActivity = focusSessionDao.getSessionWithActivityById(sessionId) ?: return null
+        return sessionWithActivity.toFocusSession()
     }
 
     private suspend fun mapToDomain(entity: FocusSessionEntity): FocusSession {

@@ -9,7 +9,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.FocusSession
+import polako.cloud.clotho.domain.model.FocusSessionWithDuration
+import polako.cloud.clotho.domain.model.toSessionUIModelWithDuration
 import polako.cloud.clotho.utils.execute
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +31,7 @@ class HistoryViewModel @Inject constructor(
     fun showHistory() {
         viewModelScope.execute(
             source = {
-                focusSessionRepository.getAllSessions()
+                focusSessionRepository.getAllSessionsWithActivity()
             },
             onSuccess = { sessions ->
                 _uiState.update {
@@ -34,11 +39,48 @@ class HistoryViewModel @Inject constructor(
                         sessions = sessions
                     )
                 }
+                getSessionUIModels()
             }
         )
+    }
+
+    private fun getSessionUIModels() {
+        viewModelScope.execute(
+            source = {
+                focusSessionRepository.getAllSessionsAsUIModels()
+            },
+            onSuccess = { uiModels ->
+                _uiState.update {
+                    it.copy(
+                        uiModelSession = uiModels.map { session ->
+                            session.toSessionUIModelWithDuration(
+                                formatDuration(session.duration)
+                            )
+                        }
+                    )
+                }
+            }
+        )
+    }
+
+    private fun formatDate(startTime: LocalDateTime): String {
+        val formatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
+        return startTime.format(formatter)
+    }
+
+    private fun formatDuration(duration: Duration): String {
+        val hours = duration.toHours()
+        val minutes = duration.toMinutesPart()
+
+        return if (hours > 0) {
+            "$hours h $minutes min"
+        } else {
+            "$minutes min"
+        }
     }
 }
 
 data class HistoryUiState(
-    val sessions: List<FocusSession> = emptyList()
+    val sessions: List<FocusSession> = emptyList(),
+    val uiModelSession: List<FocusSessionWithDuration> = emptyList()
 )
