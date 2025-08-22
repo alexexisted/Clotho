@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import polako.cloud.clotho.domain.model.FocusSession
+import polako.cloud.clotho.domain.model.FocusSessionWithDuration
 import polako.cloud.clotho.ui.composables.SessionHistoryCard
 
 @Composable
@@ -66,7 +66,7 @@ fun HistoryScreen(
                     )
                 }
             } else {
-                SessionHistoryGrid(sessions = state.sessions)
+                SessionHistoryGrid(sessions = state.uiModelSession)
             }
         }
     }
@@ -74,7 +74,7 @@ fun HistoryScreen(
 
 @Composable
 fun SessionHistoryGrid(
-    sessions: List<FocusSession>,
+    sessions: List<FocusSessionWithDuration>,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(

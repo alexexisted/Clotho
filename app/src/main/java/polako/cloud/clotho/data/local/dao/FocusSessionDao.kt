@@ -9,6 +9,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import polako.cloud.clotho.data.local.entity.FocusSessionEntity
+import polako.cloud.clotho.data.local.entity.FocusSessionWithActivity
 import java.time.LocalDateTime
 
 @Dao
@@ -42,4 +43,20 @@ interface FocusSessionDao {
 
     @Query("DELETE FROM focus_session")
     suspend fun deleteAllSessions()
+    
+    @Transaction
+    @Query("SELECT * FROM focus_session")
+    suspend fun getAllSessionsWithActivity(): List<FocusSessionWithActivity>
+    
+    @Transaction
+    @Query("SELECT * FROM focus_session WHERE sessionId = :sessionId")
+    suspend fun getSessionWithActivityById(sessionId: Long): FocusSessionWithActivity?
+    
+    @Transaction
+    @Query("SELECT * FROM focus_session WHERE activityId = :activityId")
+    fun getSessionsWithActivityByActivityId(activityId: Long): Flow<List<FocusSessionWithActivity>>
+    
+    @Transaction
+    @Query("SELECT * FROM focus_session WHERE startTime BETWEEN :startDate AND :endDate")
+    fun getSessionsWithActivityByDateRange(startDate: LocalDateTime, endDate: LocalDateTime): Flow<List<FocusSessionWithActivity>>
 }

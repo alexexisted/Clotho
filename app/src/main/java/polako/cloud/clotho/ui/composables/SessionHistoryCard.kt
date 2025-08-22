@@ -18,13 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import polako.cloud.clotho.R
 import polako.cloud.clotho.domain.model.ActivityType
-import polako.cloud.clotho.domain.model.FocusSession
-import java.time.Duration
-import java.time.format.DateTimeFormatter
+import polako.cloud.clotho.domain.model.FocusSessionWithDuration
 
 @Composable
 fun SessionHistoryCard(
-    session: FocusSession,
+    session: FocusSessionWithDuration,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -58,13 +56,13 @@ fun SessionHistoryCard(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = formatDuration(session.duration),
+                        text = session.textDuration,
                         color = Color.White,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = formatDate(session),
+                        text = "Activity: ${session.activityType?.name}",
                         color = Color.White.copy(alpha = 0.7f),
                         fontSize = 12.sp,
                         maxLines = 1,
@@ -87,20 +85,4 @@ fun SessionHistoryCard(
 
 private fun getActivityIcon(activityType: ActivityType?): Int {
     return activityType?.icon ?: R.drawable.icon_other
-}
-
-private fun formatDuration(duration: Duration): String {
-    val hours = duration.toHours()
-    val minutes = duration.toMinutesPart()
-
-    return if (hours > 0) {
-        "$hours h $minutes min"
-    } else {
-        "$minutes min"
-    }
-}
-
-private fun formatDate(session: FocusSession): String {
-    val formatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
-    return session.startTime.format(formatter)
 }

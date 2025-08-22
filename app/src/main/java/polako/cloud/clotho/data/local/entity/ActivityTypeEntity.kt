@@ -13,6 +13,7 @@ data class ActivityTypeEntity(
 ) {
     fun toDomainModel(): ActivityType {
         return ActivityType(
+            id = id,
             name = name,
             icon = iconRes
         )
