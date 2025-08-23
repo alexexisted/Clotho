@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import polako.cloud.clotho.navigation.Routes
+import polako.cloud.clotho.presentation.reflection_screen.ReflectionBS
 import polako.cloud.clotho.ui.composables.Stopwatch
 
 @Composable
@@ -71,11 +72,25 @@ fun FocusScreen(
                 onPause = { viewModel.onAction(FocusUIAction.Pause) },
                 onStop = {
                     viewModel.onAction(FocusUIAction.Stop)
-                    navController.navigate(Routes.MAIN_SCREEN)
                 },
                 onStart = { viewModel.onAction(FocusUIAction.Start) }
             )
             Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        if (state.showReflectionBottomSheet) {
+            ReflectionBS(
+                onDismissRequest = {
+                    viewModel.onAction(FocusUIAction.DismissReflection)
+                },
+                onSaveClicked = { score, tags -> 
+                    viewModel.onAction(FocusUIAction.SaveReflection(score, tags))
+                    navController.navigate(Routes.MAIN_SCREEN)
+                },
+                reflectionScore = state.initialReflectionScore,
+                reflectionTags = state.reflectionChips,
+                selectedTags = state.selectedTags
+            )
         }
     }
 }

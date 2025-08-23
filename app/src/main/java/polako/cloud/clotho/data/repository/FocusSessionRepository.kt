@@ -7,6 +7,8 @@ interface FocusSessionRepository {
     suspend fun insertFocusSession(focusSession: FocusSession): Long
 
     suspend fun updateFocusSession(focusSession: FocusSession)
+    
+    suspend fun updateFocusSessionReflection(sessionId: Long, reflectionScore: Int, reflectionNote: List<String>)
 
     suspend fun deleteFocusSession(focusSession: FocusSession)
 
