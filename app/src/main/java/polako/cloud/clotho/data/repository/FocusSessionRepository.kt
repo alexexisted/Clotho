@@ -7,6 +7,8 @@ interface FocusSessionRepository {
     suspend fun insertFocusSession(focusSession: FocusSession): Long
 
     suspend fun updateFocusSession(focusSession: FocusSession)
+    
+    suspend fun updateFocusSessionReflection(sessionId: Long, reflectionScore: Int, reflectionNote: List<String>)
 
     suspend fun deleteFocusSession(focusSession: FocusSession)
 
@@ -17,10 +19,10 @@ interface FocusSessionRepository {
     suspend fun deleteSessionById(sessionId: Long)
 
     suspend fun deleteAllSessions()
-    
+
     suspend fun getAllSessionsWithActivity(): List<FocusSession>
-    
+
     suspend fun getAllSessionsAsUIModels(): List<FocusSessionUIModel>
-    
+
     suspend fun getSessionWithActivityById(sessionId: Long): FocusSession?
 }

@@ -11,5 +11,5 @@ data class FocusSession(
     val endTime: LocalDateTime,
     val duration: Duration,
     val reflectionScore: Int = 0,
-    val reflectionNote: String? = null
+    val reflectionNote: List<String>? = null,
 )
