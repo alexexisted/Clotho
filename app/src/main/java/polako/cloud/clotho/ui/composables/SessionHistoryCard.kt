@@ -74,8 +74,7 @@ fun SessionHistoryCard(
             }
 
             Text(
-//                text = "Score: ${session.reflectionScore} /10",
-                text = "Score: 5/10",
+                text = "Score: ${session.reflectionScore} /10",
                 color = Color.White,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
