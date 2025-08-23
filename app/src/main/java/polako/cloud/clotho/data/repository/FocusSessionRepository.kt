@@ -17,10 +17,10 @@ interface FocusSessionRepository {
     suspend fun deleteSessionById(sessionId: Long)
 
     suspend fun deleteAllSessions()
-    
+
     suspend fun getAllSessionsWithActivity(): List<FocusSession>
-    
+
     suspend fun getAllSessionsAsUIModels(): List<FocusSessionUIModel>
-    
+
     suspend fun getSessionWithActivityById(sessionId: Long): FocusSession?
 }

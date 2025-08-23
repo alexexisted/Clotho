@@ -9,23 +9,27 @@ data class ActivityTypeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val name: String,
-    val iconRes: Int
+    val iconRes: Int,
+    val color: Int,
 ) {
-    fun toDomainModel(): ActivityType {
-        return ActivityType(
+    fun toDomainModel(): ActivityType =
+        ActivityType(
             id = id,
             name = name,
-            icon = iconRes
+            icon = iconRes,
+            color = color,
         )
-    }
 
     companion object {
-        fun fromDomainModelToEntity(activityType: ActivityType, id: Long = 0): ActivityTypeEntity {
-            return ActivityTypeEntity(
+        fun fromDomainModelToEntity(
+            activityType: ActivityType,
+            id: Long = 0,
+        ): ActivityTypeEntity =
+            ActivityTypeEntity(
                 id = id,
                 name = activityType.name,
-                iconRes = activityType.icon
+                iconRes = activityType.icon,
+                color = activityType.color,
             )
-        }
     }
 }
