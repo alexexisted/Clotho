@@ -6,4 +6,5 @@ data class ActivityType(
     val id: Long,
     val name: String,
     @DrawableRes val icon: Int,
+    val color: Int,
 )

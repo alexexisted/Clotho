@@ -2,21 +2,19 @@ package polako.cloud.clotho.data.local.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import polako.cloud.clotho.domain.model.ActivityType
 import polako.cloud.clotho.domain.model.FocusSession
 import polako.cloud.clotho.domain.model.FocusSessionUIModel
-import java.time.Duration
 
 data class FocusSessionWithActivity(
     @Embedded val focusSession: FocusSessionEntity,
     @Relation(
         parentColumn = "activityId",
-        entityColumn = "id"
+        entityColumn = "id",
     )
-    val activityType: ActivityTypeEntity
+    val activityType: ActivityTypeEntity,
 ) {
-    fun toFocusSession(): FocusSession {
-        return FocusSession(
+    fun toFocusSession(): FocusSession =
+        FocusSession(
             id = focusSession.sessionId,
             activityId = focusSession.activityId,
             activityType = activityType.toDomainModel(),
@@ -24,16 +22,15 @@ data class FocusSessionWithActivity(
             endTime = focusSession.endTime,
             duration = focusSession.duration,
             reflectionScore = focusSession.reflectionScore,
-            reflectionNote = focusSession.reflectionNote
+            reflectionNote = focusSession.reflectionNote,
         )
-    }
 
-    fun toFocusSessionUIModel(): FocusSessionUIModel {
-        return FocusSessionUIModel(
+    fun toFocusSessionUIModel(): FocusSessionUIModel =
+        FocusSessionUIModel(
             id = focusSession.sessionId,
             activityType = activityType.toDomainModel(),
             duration = focusSession.duration,
-            reflectionScore = focusSession.reflectionScore
+            reflectionScore = focusSession.reflectionScore,
+            color = activityType.color,
         )
-    }
 }
