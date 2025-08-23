@@ -26,7 +26,7 @@ data class FocusSessionEntity(
     val endTime: LocalDateTime,
     val duration: Duration,
     val reflectionScore: Int,
-    val reflectionNote: String?
+    val reflectionNote: List<String>?
 )
 
 fun FocusSessionEntity.toFocusSessionUIModel(): FocusSession {

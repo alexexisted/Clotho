@@ -7,10 +7,14 @@ data class FocusSessionUIModel(
     val activityType: ActivityType? = null,
     val duration: Duration,
     val reflectionScore: Int = 0,
+    val color: Int,
 )
 
-fun FocusSessionUIModel.toSessionUIModelWithDuration(textDuration: String): FocusSessionWithDuration {
-    return FocusSessionWithDuration(
-        id, activityType, textDuration, reflectionScore
+fun FocusSessionUIModel.toSessionUIModelWithDuration(textDuration: String): FocusSessionWithDuration =
+    FocusSessionWithDuration(
+        id,
+        activityType,
+        textDuration,
+        reflectionScore,
+        color
     )
-}

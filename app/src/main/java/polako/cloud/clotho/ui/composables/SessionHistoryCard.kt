@@ -23,66 +23,65 @@ import polako.cloud.clotho.domain.model.FocusSessionWithDuration
 @Composable
 fun SessionHistoryCard(
     session: FocusSessionWithDuration,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.width(160.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E2A38))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E2A38)),
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 val iconRes = getActivityIcon(session.activityType)
                 Icon(
                     painter = painterResource(id = iconRes),
                     contentDescription = "Activity Icon",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(Color(0xFF2A3A4A), shape = RoundedCornerShape(12.dp))
-                        .padding(8.dp),
-                    tint = Color.White
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(Color(0xFF2A3A4A), shape = RoundedCornerShape(12.dp))
+                            .padding(8.dp),
+                    tint = Color(session.color),
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Column(
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = session.textDuration,
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                     Text(
                         text = "Activity: ${session.activityType?.name}",
                         color = Color.White.copy(alpha = 0.7f),
                         fontSize = 12.sp,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
 
             Text(
-//                text = "Score: ${session.reflectionScore} /10",
-                text = "Score: 5/10",
+                text = "Score: ${session.reflectionScore} /10",
                 color = Color.White,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.BottomEnd)
+                modifier = Modifier.align(Alignment.BottomEnd),
             )
         }
     }
 }
 
-private fun getActivityIcon(activityType: ActivityType?): Int {
-    return activityType?.icon ?: R.drawable.icon_other
-}
+private fun getActivityIcon(activityType: ActivityType?): Int = activityType?.icon ?: R.drawable.icon_other

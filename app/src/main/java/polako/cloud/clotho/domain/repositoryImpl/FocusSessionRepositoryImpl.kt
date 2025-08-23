@@ -23,6 +23,15 @@ class FocusSessionRepositoryImpl @Inject constructor(
         val entity = mapToEntity(focusSession)
         focusSessionDao.update(entity)
     }
+    
+    override suspend fun updateFocusSessionReflection(sessionId: Long, reflectionScore: Int, reflectionNote: List<String>) {
+        val session = focusSessionDao.getSessionById(sessionId) ?: return
+        val updatedSession = session.copy(
+            reflectionScore = reflectionScore,
+            reflectionNote = reflectionNote
+        )
+        focusSessionDao.update(updatedSession)
+    }
 
     override suspend fun deleteFocusSession(focusSession: FocusSession) {
         val entity = mapToEntity(focusSession)

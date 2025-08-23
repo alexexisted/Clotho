@@ -2,11 +2,8 @@ package polako.cloud.clotho.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import polako.cloud.clotho.presentation.focus_screen.FocusScreen
 import polako.cloud.clotho.presentation.history_screen.HistoryScreen
 import polako.cloud.clotho.presentation.main_screen.MainScreen
@@ -26,7 +23,7 @@ fun ClothoNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
         composable(Routes.MAIN_SCREEN) {
             MainScreen(navController)
@@ -35,7 +32,7 @@ fun ClothoNavHost(
         composable(Routes.SESSION_SETUP) {
             SessionSetupScreen(navController)
         }
-        
+
         composable(Routes.FOCUS_SCREEN) {
             FocusScreen(navController)
         }

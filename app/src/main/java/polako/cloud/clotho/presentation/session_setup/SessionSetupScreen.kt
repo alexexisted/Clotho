@@ -22,43 +22,46 @@ import polako.cloud.clotho.ui.composables.ActivityItem
 @Composable
 fun SessionSetupScreen(
     navController: NavController,
-    viewModel: SessionSetupViewModel = hiltViewModel()
+    viewModel: SessionSetupViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
 
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    gradientColors
-                )
-            )
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(
+                    brush =
+                        Brush.linearGradient(
+                            gradientColors,
+                        ),
+                ),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(5.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(5.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = "Choose the Activity",
                 style = MaterialTheme.typography.headlineMedium,
                 color = Color.White,
-                modifier = Modifier.padding(vertical = 20.dp)
+                modifier = Modifier.padding(vertical = 20.dp),
             )
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
                 contentPadding = PaddingValues(horizontal = 5.dp, vertical = 2.dp),
-                modifier = Modifier
+                modifier = Modifier,
             ) {
                 items(state.activityTypesLists) { activityType ->
                     ActivityItem(
                         activity = activityType,
-                        onSelected = { viewModel.onActivityTypeSelected(activityType) }
+                        onSelected = { viewModel.onActivityTypeSelected(activityType) },
                     ) {
                         viewModel.onActivityTypeSelected(activityType)
                         navController.navigate(polako.cloud.clotho.navigation.Routes.FOCUS_SCREEN)
