@@ -16,7 +16,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import polako.cloud.clotho.navigation.Routes
 import polako.cloud.clotho.presentation.reflection_screen.ReflectionBS
 import polako.cloud.clotho.ui.composables.Stopwatch
@@ -90,13 +89,11 @@ fun FocusScreen(
                 },
                 onSaveClicked = { score, tags ->
                     viewModel.onAction(FocusUIAction.SaveReflection(score, tags))
-                    navController.navigate(Routes.MAIN_SCREEN) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.popBackStack(
+                        route = Routes.MAIN_SCREEN,
+                        inclusive = false,
+                    )
+                    navController.navigate(Routes.MAIN_SCREEN)
                 },
                 reflectionScore = state.initialReflectionScore,
                 reflectionTags = state.reflectionChips,
