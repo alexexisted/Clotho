@@ -1,6 +1,6 @@
 # Clotho - Focus Time Tracker
 
-Clotho is a modern Android application designed to help users track and improve their focus time across different activities. The app provides a clean, intuitive interface for timing focus sessions, reflecting on productivity, and reviewing past performance.
+Clotho is a Android application designed to help users track and improve their focus time across different activities. The app provides a clean, intuitive interface for timing focus sessions, reflecting on productivity, and reviewing past performance.
 
 ## Features
 
