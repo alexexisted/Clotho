@@ -1,5 +1,6 @@
 package polako.cloud.clotho.ui.composables
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FilterChip
@@ -20,6 +21,7 @@ fun ReflectionTagChips(
 ) {
     FlowRow(
         modifier = modifier.padding(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
 //        mainAxisSpacing = 8.dp,
 //        crossAxisSpacing = 8.dp
     ) {
@@ -29,8 +31,8 @@ fun ReflectionTagChips(
                 onClick = { onTagToggle(tag) },
                 label = { Text(tag) },
                 colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = MaterialTheme.colorScheme.primary,
-                    selectedLabelColor = Color.White
+                    selectedContainerColor = MaterialTheme.colorScheme.surface,
+                    selectedLabelColor = Color.Gray
                 )
             )
         }
