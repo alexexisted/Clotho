@@ -18,13 +18,13 @@ fun ReflectionBS(
     onSaveClicked: (score: Int, tags: List<String>) -> Unit,
     reflectionScore: Float,
     reflectionTags: List<String>,
-    selectedTags: List<String>,
+    selectedTags: List<String>
 ) {
     var score by remember { mutableStateOf(reflectionScore) }
     var tagSelections by remember { mutableStateOf(selectedTags) }
 
     ModalBottomSheet(
-        onDismissRequest = { onDismissRequest() },
+        onDismissRequest = {  onDismissRequest() },
     ) {
         Column(
             modifier =
@@ -65,12 +65,6 @@ fun ReflectionBS(
 
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                colors = ButtonColors(
-                    containerColor = MaterialTheme.colorScheme.inversePrimary,
-                    contentColor = MaterialTheme.colorScheme.background,
-                    disabledContainerColor = MaterialTheme.colorScheme.error,
-                    disabledContentColor = MaterialTheme.colorScheme.secondary
-                ),
                 onClick = {
                     onSaveClicked(score.toInt(), tagSelections)
                 },
