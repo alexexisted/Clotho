@@ -15,7 +15,7 @@ inline fun <reified T> CoroutineScope.execute(
     crossinline source: suspend () -> T,
     crossinline onSuccess: (T) -> Unit = {},
     crossinline onComplete: (Result<T>) -> Unit = {},
-    crossinline onError: (Throwable) -> Unit = {}
+    crossinline onError: (Throwable) -> Unit = {},
 ) {
     launch(Dispatchers.IO) {
         runCatching { source() }
@@ -24,8 +24,7 @@ inline fun <reified T> CoroutineScope.execute(
                     onSuccess(result)
                     onComplete(Result.success(result))
                 }
-            }
-            .onFailure { throwable ->
+            }.onFailure { throwable ->
                 withContext(Dispatchers.Main) {
                     onError(throwable)
                     onComplete(Result.failure(throwable))

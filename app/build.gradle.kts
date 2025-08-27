@@ -5,11 +5,17 @@ plugins {
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.ktlint.kotlin)
 }
 
 ksp {
     arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
 }
+
+ktlint {
+    version.set("1.7.1")
+}
+
 android {
     namespace = "polako.cloud.clotho"
     compileSdk = 36
@@ -54,7 +60,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.36.0")
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
