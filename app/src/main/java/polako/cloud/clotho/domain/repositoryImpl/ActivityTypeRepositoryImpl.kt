@@ -28,14 +28,16 @@ class ActivityTypeRepositoryImpl
             activityTypeDao.delete(ActivityTypeEntity.fromDomainModelToEntity(activityType, id))
         }
 
-        override suspend fun getActivityTypeById(id: Long): ActivityType? = activityTypeDao.getActivityTypeById(id)?.toDomainModel()
+        override suspend fun getActivityTypeById(id: Long): ActivityType? =
+            activityTypeDao.getActivityTypeById(id)?.toDomainModel()
 
         override suspend fun getActivityTypeByName(name: String): Long {
             val activity = activityTypeDao.getActivityTypeByName(name)
             return activity.id
         }
 
-        override suspend fun getAllActivities(): List<ActivityType> = activityTypeDao.getAllActivities().map { it.toDomainModel() }
+        override suspend fun getAllActivities(): List<ActivityType> =
+            activityTypeDao.getAllActivities().map { it.toDomainModel() }
 
         override suspend fun deleteAllActivityTypes() {
             activityTypeDao.deleteAllActivityTypes()

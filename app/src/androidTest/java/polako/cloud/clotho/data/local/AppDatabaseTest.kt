@@ -29,9 +29,12 @@ class AppDatabaseTest {
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-            context, AppDatabase::class.java
-        ).build()
+        db =
+            Room
+                .inMemoryDatabaseBuilder(
+                    context,
+                    AppDatabase::class.java,
+                ).build()
         activityTypeDao = db.activityTypeDao()
         focusSessionDao = db.focusSessionDao()
     }
@@ -42,102 +45,116 @@ class AppDatabaseTest {
     }
 
     @Test
-    fun testInsertAndReadActivityType() = runBlocking {
-        val activityType = ActivityTypeEntity(
-            name = "Work",
-            iconRes = 123
-        )
-        val id = activityTypeDao.insert(activityType)
+    fun testInsertAndReadActivityType() =
+        runBlocking {
+            val activityType =
+                ActivityTypeEntity(
+                    name = "Work",
+                    iconRes = 123,
+                    color = 0xFF607D8B.toInt(),
+                )
+            val id = activityTypeDao.insert(activityType)
 
-        val retrievedActivityType = activityTypeDao.getActivityTypeById(id)
+            val retrievedActivityType = activityTypeDao.getActivityTypeById(id)
 
-        assertNotNull(retrievedActivityType)
-        assertEquals("Work", retrievedActivityType?.name)
-        assertEquals(123, retrievedActivityType?.iconRes)
-    }
-
-    @Test
-    fun testGetActivityIdByName() = runBlocking {
-        val activityType = ActivityType(
-            name = "Work",
-            icon = 123
-        )
-
-        val id = activityTypeDao.getActivityTypeByName(activityType.name).id
-
-        assertNotNull(id)
-
-    }
+            assertNotNull(retrievedActivityType)
+            assertEquals("Work", retrievedActivityType?.name)
+            assertEquals(123, retrievedActivityType?.iconRes)
+        }
 
     @Test
-    fun testInsertAndReadFocusSession() = runBlocking {
-        val activityType = ActivityTypeEntity(
-            name = "Study",
-            iconRes = 456
-        )
-        val activityId = activityTypeDao.insert(activityType)
+    fun testGetActivityIdByName() =
+        runBlocking {
+            val activityType =
+                ActivityType(
+                    id = 1,
+                    name = "Work",
+                    icon = 123,
+                    color = 0xFF607D8B.toInt(),
+                )
 
-        val startTime = LocalDateTime.now().minusHours(1)
-        val endTime = LocalDateTime.now()
-        val duration = Duration.between(startTime, endTime)
-        
-        val focusSession = FocusSessionEntity(
-            activityId = activityId,
-            startTime = startTime,
-            endTime = endTime,
-            duration = duration,
-            reflectionScore = 4,
-            reflectionNote = "Productive session"
-        )
-        val sessionId = focusSessionDao.insert(focusSession)
+            val id = activityTypeDao.getActivityTypeByName(activityType.name).id
 
-        val retrievedSession = focusSessionDao.getSessionById(sessionId)
-
-        assertNotNull(retrievedSession)
-        assertEquals(activityId, retrievedSession?.activityId)
-        assertEquals(4, retrievedSession?.reflectionScore)
-        assertEquals("Productive session", retrievedSession?.reflectionNote)
-    }
+            assertNotNull(id)
+        }
 
     @Test
-    fun testGetSessionsByActivityId() = runBlocking {
-        val activityType = ActivityTypeEntity(
-            name = "Reading",
-            iconRes = 789
-        )
-        val activityId = activityTypeDao.insert(activityType)
+    fun testInsertAndReadFocusSession() =
+        runBlocking {
+            val activityType =
+                ActivityTypeEntity(
+                    name = "Study",
+                    iconRes = 456,
+                    color = 0xFF607D8B.toInt(),
+                )
+            val activityId = activityTypeDao.insert(activityType)
 
-        val startTime1 = LocalDateTime.now().minusDays(1)
-        val endTime1 = startTime1.plusHours(2)
-        val duration1 = Duration.between(startTime1, endTime1)
-        
-        val focusSession1 = FocusSessionEntity(
-            activityId = activityId,
-            startTime = startTime1,
-            endTime = endTime1,
-            duration = duration1,
-            reflectionScore = 3,
-            reflectionNote = "Good session"
-        )
-        
-        val startTime2 = LocalDateTime.now().minusHours(5)
-        val endTime2 = startTime2.plusHours(1)
-        val duration2 = Duration.between(startTime2, endTime2)
-        
-        val focusSession2 = FocusSessionEntity(
-            activityId = activityId,
-            startTime = startTime2,
-            endTime = endTime2,
-            duration = duration2,
-            reflectionScore = 5,
-            reflectionNote = "Great session"
-        )
-        
-        focusSessionDao.insert(focusSession1)
-        focusSessionDao.insert(focusSession2)
+            val startTime = LocalDateTime.now().minusHours(1)
+            val endTime = LocalDateTime.now()
+            val duration = Duration.between(startTime, endTime)
 
-        val sessions = focusSessionDao.getSessionsByActivityId(activityId).first()
+            val focusSession =
+                FocusSessionEntity(
+                    activityId = activityId,
+                    startTime = startTime,
+                    endTime = endTime,
+                    duration = duration,
+                    reflectionScore = 4,
+                    reflectionNote = listOf("Great session"),
+                )
+            val sessionId = focusSessionDao.insert(focusSession)
 
-        assertEquals(2, sessions.size)
-    }
+            val retrievedSession = focusSessionDao.getSessionById(sessionId)
+
+            assertNotNull(retrievedSession)
+            assertEquals(activityId, retrievedSession?.activityId)
+            assertEquals(4, retrievedSession?.reflectionScore)
+        }
+
+    @Test
+    fun testGetSessionsByActivityId() =
+        runBlocking {
+            val activityType =
+                ActivityTypeEntity(
+                    name = "Reading",
+                    iconRes = 789,
+                    color = 0xFF607D8B.toInt(),
+                )
+            val activityId = activityTypeDao.insert(activityType)
+
+            val startTime1 = LocalDateTime.now().minusDays(1)
+            val endTime1 = startTime1.plusHours(2)
+            val duration1 = Duration.between(startTime1, endTime1)
+
+            val focusSession1 =
+                FocusSessionEntity(
+                    activityId = activityId,
+                    startTime = startTime1,
+                    endTime = endTime1,
+                    duration = duration1,
+                    reflectionScore = 3,
+                    reflectionNote = listOf("Great session"),
+                )
+
+            val startTime2 = LocalDateTime.now().minusHours(5)
+            val endTime2 = startTime2.plusHours(1)
+            val duration2 = Duration.between(startTime2, endTime2)
+
+            val focusSession2 =
+                FocusSessionEntity(
+                    activityId = activityId,
+                    startTime = startTime2,
+                    endTime = endTime2,
+                    duration = duration2,
+                    reflectionScore = 5,
+                    reflectionNote = listOf("Great session"),
+                )
+
+            focusSessionDao.insert(focusSession1)
+            focusSessionDao.insert(focusSession2)
+
+            val sessions = focusSessionDao.getSessionsByActivityId(activityId).first()
+
+            assertEquals(2, sessions.size)
+        }
 }

@@ -65,12 +65,13 @@ fun ReflectionBS(
 
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                colors = ButtonColors(
-                    containerColor = MaterialTheme.colorScheme.inversePrimary,
-                    contentColor = MaterialTheme.colorScheme.background,
-                    disabledContainerColor = MaterialTheme.colorScheme.error,
-                    disabledContentColor = MaterialTheme.colorScheme.secondary
-                ),
+                colors =
+                    ButtonColors(
+                        containerColor = MaterialTheme.colorScheme.inversePrimary,
+                        contentColor = MaterialTheme.colorScheme.background,
+                        disabledContainerColor = MaterialTheme.colorScheme.error,
+                        disabledContentColor = MaterialTheme.colorScheme.secondary,
+                    ),
                 onClick = {
                     onSaveClicked(score.toInt(), tagSelections)
                 },

@@ -21,7 +21,6 @@ import polako.cloud.clotho.domain.model.ActivityType
 @Composable
 fun ActivityItem(
     activity: ActivityType,
-    onSelected: () -> Unit,
     onStartClick: () -> Unit,
 ) {
     Row(

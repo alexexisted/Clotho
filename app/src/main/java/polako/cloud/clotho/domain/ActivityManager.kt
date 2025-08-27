@@ -8,6 +8,8 @@ import javax.inject.Singleton
  * Used to hold selected activity that user chooses
  */
 @Singleton
-class ActivityManager @Inject constructor() {
-    var selectedActivity: ActivityType? = null
-}
+class ActivityManager
+    @Inject
+    constructor() {
+        var selectedActivity: ActivityType? = null
+    }

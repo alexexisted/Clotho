@@ -82,8 +82,6 @@ class FocusViewModel
         }
 
         private fun stopTimer() {
-            val currentState = _uiState.value
-
             _uiState.update {
                 it.copy(
                     isRunning = false,

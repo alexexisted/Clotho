@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply  false
     alias(libs.plugins.dagger.hilt.android) apply false
     alias(libs.plugins.google.ksp) apply false
+    alias(libs.plugins.ktlint.kotlin) apply false
 }
