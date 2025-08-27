@@ -14,40 +14,41 @@ import polako.cloud.clotho.utils.execute
 import javax.inject.Inject
 
 @HiltViewModel
-class SessionSetupViewModel @Inject constructor(
-    private val activityManager: ActivityManager,
-    private val activityTypeRepository: ActivityTypeRepository
-) : ViewModel() {
+class SessionSetupViewModel
+    @Inject
+    constructor(
+        private val activityManager: ActivityManager,
+        private val activityTypeRepository: ActivityTypeRepository,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(SessionSetupUiState())
+        val uiState: StateFlow<SessionSetupUiState> = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(SessionSetupUiState())
-    val uiState: StateFlow<SessionSetupUiState> = _uiState.asStateFlow()
-
-    init {
-        getAllActivities()
-    }
-
-    fun onActivityTypeSelected(activityType: ActivityType) {
-        _uiState.update {
-            it.copy(selectedActivity = activityType)
+        init {
+            getAllActivities()
         }
-        activityManager.selectedActivity = activityType
-    }
 
-    private fun getAllActivities() {
-        viewModelScope.execute(
-            source = { activityTypeRepository.getAllActivities() },
-            onSuccess = { types ->
-                _uiState.update {
-                    it.copy(
-                        activityTypesLists = types
-                    )
-                }
+        fun onActivityTypeSelected(activityType: ActivityType) {
+            _uiState.update {
+                it.copy(selectedActivity = activityType)
             }
-        )
+            activityManager.selectedActivity = activityType
+        }
+
+        private fun getAllActivities() {
+            viewModelScope.execute(
+                source = { activityTypeRepository.getAllActivities() },
+                onSuccess = { types ->
+                    _uiState.update {
+                        it.copy(
+                            activityTypesLists = types,
+                        )
+                    }
+                },
+            )
+        }
     }
-}
 
 data class SessionSetupUiState(
     val activityTypesLists: List<ActivityType> = emptyList(),
-    val selectedActivity: ActivityType? = null
+    val selectedActivity: ActivityType? = null,
 )

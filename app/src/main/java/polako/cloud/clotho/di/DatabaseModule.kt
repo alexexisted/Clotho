@@ -52,12 +52,36 @@ object DatabaseModule {
                         CoroutineScope(Dispatchers.IO).launch {
                             val activityTypes =
                                 listOf(
-                                    ActivityTypeEntity(name = "Work", iconRes = R.drawable.icon_work, color = 0xFFFF7043.toInt()),
-                                    ActivityTypeEntity(name = "Study", iconRes = R.drawable.icon_school, color = 0xFFFFC107.toInt()),
-                                    ActivityTypeEntity(name = "Reading", iconRes = R.drawable.icon_book, color = 0xFF26A69A.toInt()),
-                                    ActivityTypeEntity(name = "Meditation", iconRes = R.drawable.icon_mind, color = 0xFF29B6F6.toInt()),
-                                    ActivityTypeEntity(name = "Sport", iconRes = R.drawable.icon_barbell, color = 0xFFCDDC39.toInt()),
-                                    ActivityTypeEntity(name = "Other", iconRes = R.drawable.icon_other, color = 0xFF607D8B.toInt()),
+                                    ActivityTypeEntity(
+                                        name = "Work",
+                                        iconRes = R.drawable.icon_work,
+                                        color = 0xFFFF7043.toInt(),
+                                    ),
+                                    ActivityTypeEntity(
+                                        name = "Study",
+                                        iconRes = R.drawable.icon_school,
+                                        color = 0xFFFFC107.toInt(),
+                                    ),
+                                    ActivityTypeEntity(
+                                        name = "Reading",
+                                        iconRes = R.drawable.icon_book,
+                                        color = 0xFF26A69A.toInt(),
+                                    ),
+                                    ActivityTypeEntity(
+                                        name = "Meditation",
+                                        iconRes = R.drawable.icon_mind,
+                                        color = 0xFF29B6F6.toInt(),
+                                    ),
+                                    ActivityTypeEntity(
+                                        name = "Sport",
+                                        iconRes = R.drawable.icon_barbell,
+                                        color = 0xFFCDDC39.toInt(),
+                                    ),
+                                    ActivityTypeEntity(
+                                        name = "Other",
+                                        iconRes = R.drawable.icon_other,
+                                        color = 0xFF607D8B.toInt(),
+                                    ),
                                 )
                             activityTypes.forEach { activityType ->
                                 database.activityTypeDao().insert(activityType)

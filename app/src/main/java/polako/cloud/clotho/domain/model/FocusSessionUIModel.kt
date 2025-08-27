@@ -16,5 +16,5 @@ fun FocusSessionUIModel.toSessionUIModelWithDuration(textDuration: String): Focu
         activityType,
         textDuration,
         reflectionScore,
-        color
+        color,
     )

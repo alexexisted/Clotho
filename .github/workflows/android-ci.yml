@@ -2,15 +2,15 @@ name: Build mommy
 
 on:
   pull_request:
-    branches: [mommy(prod-ready)]
-    types: [closed]
+    branches: [ mommy(prod-ready) ]
+    types: [ closed ]
 
 jobs:
   build:
     if: |
       github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'mommy(prod-ready)' &&
-      github.event.pull_request.head.ref == 'test'
+      github.event.pull_request.head.ref == 'dev'
 
     runs-on: ubuntu-latest
 
@@ -25,5 +25,18 @@ jobs:
       - name: Grant Execute Permission
         run: chmod +x gradlew
 
+      - name: Run ktlint check
+        run: ./gradlew ktlintCheck
+
       - name: Build APK
         run: ./gradlew assembleRelease
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: "Release ${{ github.run_number }}"
+          body: "Auto-generated release from merge of dev -> mommy(prod-ready)"
+          files: app/build/outputs/apk/release/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
