@@ -13,6 +13,8 @@ jobs:
       github.event.pull_request.head.ref == 'dev'
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v3
@@ -37,6 +39,6 @@ jobs:
           tag_name: v${{ github.run_number }}
           name: "Release ${{ github.run_number }}"
           body: "Auto-generated release from merge of dev -> mommy(prod-ready)"
-          files: app/build/outputs/apk/release/app-release.apk
+          files: app/build/outputs/apk/release/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
