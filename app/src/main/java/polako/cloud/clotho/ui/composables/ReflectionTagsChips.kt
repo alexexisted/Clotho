@@ -17,23 +17,22 @@ fun ReflectionTagChips(
     tags: List<String>,
     selectedTags: List<String>,
     onTagToggle: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier = modifier.padding(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-//        mainAxisSpacing = 8.dp,
-//        crossAxisSpacing = 8.dp
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         tags.forEach { tag ->
             FilterChip(
                 selected = selectedTags.contains(tag),
                 onClick = { onTagToggle(tag) },
                 label = { Text(tag) },
-                colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = MaterialTheme.colorScheme.surface,
-                    selectedLabelColor = Color.Gray
-                )
+                colors =
+                    FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = MaterialTheme.colorScheme.surface,
+                        selectedLabelColor = Color.Gray,
+                    ),
             )
         }
     }

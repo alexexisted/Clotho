@@ -14,9 +14,9 @@ import java.time.LocalDateTime
             entity = ActivityTypeEntity::class,
             parentColumns = ["id"],
             childColumns = ["activityId"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class FocusSessionEntity(
     @PrimaryKey(autoGenerate = true)
@@ -26,11 +26,11 @@ data class FocusSessionEntity(
     val endTime: LocalDateTime,
     val duration: Duration,
     val reflectionScore: Int,
-    val reflectionNote: List<String>?
+    val reflectionNote: List<String>?,
 )
 
-fun FocusSessionEntity.toFocusSessionUIModel(): FocusSession {
-    return FocusSession(
+fun FocusSessionEntity.toFocusSessionUIModel(): FocusSession =
+    FocusSession(
         id = this.sessionId,
         activityId = this.activityId,
         activityType = null,
@@ -40,4 +40,3 @@ fun FocusSessionEntity.toFocusSessionUIModel(): FocusSession {
         reflectionScore = this.reflectionScore,
         reflectionNote = this.reflectionNote,
     )
-}
