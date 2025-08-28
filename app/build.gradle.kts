@@ -16,10 +16,6 @@ ktlint {
     version.set("1.7.1")
 }
 
-val keystorePath: String = project.property("APK_KEY_FILE") as String
-val keystorePassword: String = project.property("APK_KEY_PASSWORD") as String
-val keyAliasName: String = project.property("APK_KEY_ALIAS") as String
-
 android {
     namespace = "polako.cloud.clotho"
     compileSdk = 36
@@ -36,6 +32,10 @@ android {
 
     signingConfigs {
         create("release") {
+            val keystorePath = System.getenv("APK_KEY_FILE") ?: project.findProperty("APK_KEY_FILE") as String
+            val keystorePassword = System.getenv("APK_KEY_PASSWORD") ?: project.findProperty("APK_KEY_PASSWORD") as String
+            val keyAliasName = System.getenv("APK_KEY_ALIAS") ?: project.findProperty("APK_KEY_ALIAS") as String
+
             storeFile = file(keystorePath)
             storePassword = keystorePassword
             keyAlias = keyAliasName
