@@ -37,7 +37,7 @@ android {
                     ?: project.findProperty("APK_KEY_FILE") as? String
                     ?: throw GradleException("Missing APK_KEY_FILE (not in env or gradle.properties)")
 
-            var keyPassword: String =
+            val storePass: String =
                 System.getenv("APK_KEY_PASSWORD")
                     ?: project.findProperty("APK_KEY_PASSWORD") as? String
                     ?: throw GradleException("Missing APK_KEY_PASSWORD")
@@ -49,9 +49,9 @@ android {
 
 
             storeFile = file(keystorePath)
-            storePassword = keyPassword
+            storePassword = storePass
             keyAlias = keyAliasName
-            keyPassword = keyPassword
+            keyPassword = storePass
         }
     }
 
@@ -64,16 +64,16 @@ android {
                 "proguard-rules.pro",
             )
         }
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_21
-            targetCompatibility = JavaVersion.VERSION_21
-        }
-        kotlinOptions {
-            jvmTarget = "21"
-        }
-        buildFeatures {
-            compose = true
-        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+    kotlinOptions {
+        jvmTarget = "21"
+    }
+    buildFeatures {
+        compose = true
     }
 
     dependencies {
