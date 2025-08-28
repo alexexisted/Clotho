@@ -32,15 +32,26 @@ android {
 
     signingConfigs {
         create("release") {
-            val keystorePath = System.getenv("APK_KEY_FILE") ?: project.findProperty("APK_KEY_FILE") as String
-            val keystorePassword =
-                System.getenv("APK_KEY_PASSWORD") ?: project.findProperty("APK_KEY_PASSWORD") as String
-            val keyAliasName = System.getenv("APK_KEY_ALIAS") ?: project.findProperty("APK_KEY_ALIAS") as String
+            val keystorePath: String =
+                System.getenv("APK_KEY_FILE")
+                    ?: project.findProperty("APK_KEY_FILE") as? String
+                    ?: throw GradleException("Missing APK_KEY_FILE (not in env or gradle.properties)")
+
+            val keyPassword: String =
+                System.getenv("APK_KEY_PASSWORD")
+                    ?: project.findProperty("APK_KEY_PASSWORD") as? String
+                    ?: throw GradleException("Missing APK_KEY_PASSWORD")
+
+            val keyAliasName: String =
+                System.getenv("APK_KEY_ALIAS")
+                    ?: project.findProperty("APK_KEY_ALIAS") as? String
+                    ?: throw GradleException("Missing APK_KEY_ALIAS")
+
 
             storeFile = file(keystorePath)
-            storePassword = keystorePassword
+            storePassword = keyPassword
             keyAlias = keyAliasName
-            keyPassword = keystorePassword
+//            keyPassword = keyPassword
         }
     }
 
