@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ mommy(prod-ready) ]
     types: [ closed ]
-
+    
 jobs:
   build:
     if: |
@@ -31,11 +31,14 @@ jobs:
         run: ./gradlew ktlintCheck
 
       - name: Decode keystore
-        run: echo "${{ secrets.APK_KEY_BASE64 }}" | base64 --decode > keystore.jks
+        run: echo "${{ secrets.APK_KEY_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/keystore.jks
 
       - name: Set up signing environment
         run: |
-          echo "APK_KEY_FILE=keystore.jks" >> $GITHUB_ENV
+          echo "APK_KEY_FILE=$GITHUB_WORKSPACE/keystore.jks" >> $GITHUB_ENV
+          echo "APK_KEY_FILE=$APK_KEY_FILE"
+          ls -l $APK_KEY_FILE || echo "Keystore not found"
+          
           echo "APK_KEY_ALIAS=${{ secrets.APK_KEY_ALIAS }}" >> $GITHUB_ENV
           echo "APK_KEY_PASSWORD=${{ secrets.APK_KEY_PASSWORD }}" >> $GITHUB_ENV
 
