@@ -37,7 +37,7 @@ android {
                     ?: project.findProperty("APK_KEY_FILE") as? String
                     ?: throw GradleException("Missing APK_KEY_FILE (not in env or gradle.properties)")
 
-            val keyPassword: String =
+            var keyPassword: String =
                 System.getenv("APK_KEY_PASSWORD")
                     ?: project.findProperty("APK_KEY_PASSWORD") as? String
                     ?: throw GradleException("Missing APK_KEY_PASSWORD")
@@ -51,7 +51,7 @@ android {
             storeFile = file(keystorePath)
             storePassword = keyPassword
             keyAlias = keyAliasName
-//            keyPassword = keyPassword
+            keyPassword = keyPassword
         }
     }
 
