@@ -2,6 +2,8 @@
 .gradle
 .idea
 /.idea
+/gitkeys
+gradle.properties
 /local.properties
 /.idea/caches
 /.idea/libraries
