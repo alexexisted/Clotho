@@ -42,16 +42,6 @@ jobs:
       - name: Run ktlint check
         run: ./gradlew ktlintCheck
 
-      - name: Decode keystore
-        run: echo "${{ secrets.APK_KEY_BASE64 }}" | base64 --decode > keystore.jks
-
-      - name: Set up signing environment
-        run: |
-          echo "APK_KEY_FILE=keystore.jks" >> $GITHUB_ENV
-          echo "APK_KEY_ALIAS=${{ secrets.APK_KEY_ALIAS }}" >> $GITHUB_ENV
-          echo "APK_KEY_PASSWORD=${{ secrets.APK_KEY_PASSWORD }}" >> $GITHUB_ENV
-
-
       - name: Build APK
         run: ./gradlew assembleRelease
 
