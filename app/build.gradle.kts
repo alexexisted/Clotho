@@ -47,7 +47,6 @@ android {
                     ?: project.findProperty("APK_KEY_ALIAS") as? String
                     ?: throw GradleException("Missing APK_KEY_ALIAS")
 
-
             storeFile = file(keystorePath)
             storePassword = storePass
             keyAlias = keyAliasName
