@@ -39,6 +39,15 @@ jobs:
           echo "APK_KEY_ALIAS=${{ secrets.APK_KEY_ALIAS }}" >> $GITHUB_ENV
           echo "APK_KEY_PASSWORD=${{ secrets.APK_KEY_PASSWORD }}" >> $GITHUB_ENV
 
+      - name: Create gradle.properties
+        run: |
+          cat <<EOF > $GITHUB_WORKSPACE/gradle.properties
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          android.useAndroidX=true
+          kotlin.code.style=official
+          android.nonTransitiveRClass=true
+          EOF
+
       - name: Run ktlint check
         run: ./gradlew ktlintCheck
 
