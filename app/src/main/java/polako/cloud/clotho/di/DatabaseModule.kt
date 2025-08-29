@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import polako.cloud.clotho.R
 import polako.cloud.clotho.data.local.AppDatabase
@@ -21,75 +22,91 @@ import polako.cloud.clotho.data.repository.ActivityTypeRepository
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.repositoryImpl.ActivityTypeRepositoryImpl
 import polako.cloud.clotho.domain.repositoryImpl.FocusSessionRepositoryImpl
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ApplicationScope
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
     @Provides
     @Singleton
+    @ApplicationScope
+    fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    @Suppress("ktlint:standard:property-naming")
+    private var INSTANCE: AppDatabase? = null
+
+    @Provides
+    @Singleton
     fun provideAppDatabase(
         @ApplicationContext context: Context,
-    ): AppDatabase =
-        Room
-            .databaseBuilder(
-                context,
-                AppDatabase::class.java,
-                "clotho_database",
-            ).addCallback(
-                object : RoomDatabase.Callback() {
-                    override fun onCreate(db: SupportSQLiteDatabase) {
-                        super.onCreate(db)
+        @ApplicationScope appScope: CoroutineScope,
+    ): AppDatabase {
+        INSTANCE?.let { return it }
+        val callback =
+            object : RoomDatabase.Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    appScope.launch {
+                        val database = INSTANCE!!
+                        val activityTypes =
+                            listOf(
+                                ActivityTypeEntity(
+                                    name = "Work",
+                                    iconRes = R.drawable.icon_work,
+                                    color = 0xFFFF7043.toInt(),
+                                ),
+                                ActivityTypeEntity(
+                                    name = "Study",
+                                    iconRes = R.drawable.icon_school,
+                                    color = 0xFFFFC107.toInt(),
+                                ),
+                                ActivityTypeEntity(
+                                    name = "Reading",
+                                    iconRes = R.drawable.icon_book,
+                                    color = 0xFF26A69A.toInt(),
+                                ),
+                                ActivityTypeEntity(
+                                    name = "Meditation",
+                                    iconRes = R.drawable.icon_mind,
+                                    color = 0xFF29B6F6.toInt(),
+                                ),
+                                ActivityTypeEntity(
+                                    name = "Sport",
+                                    iconRes = R.drawable.icon_barbell,
+                                    color = 0xFFCDDC39.toInt(),
+                                ),
+                                ActivityTypeEntity(
+                                    name = "Other",
+                                    iconRes = R.drawable.icon_other,
+                                    color = 0xFF607D8B.toInt(),
+                                ),
+                            )
 
-                        val database =
-                            Room
-                                .databaseBuilder(
-                                    context,
-                                    AppDatabase::class.java,
-                                    "clotho_database",
-                                ).build()
-
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val activityTypes =
-                                listOf(
-                                    ActivityTypeEntity(
-                                        name = "Work",
-                                        iconRes = R.drawable.icon_work,
-                                        color = 0xFFFF7043.toInt(),
-                                    ),
-                                    ActivityTypeEntity(
-                                        name = "Study",
-                                        iconRes = R.drawable.icon_school,
-                                        color = 0xFFFFC107.toInt(),
-                                    ),
-                                    ActivityTypeEntity(
-                                        name = "Reading",
-                                        iconRes = R.drawable.icon_book,
-                                        color = 0xFF26A69A.toInt(),
-                                    ),
-                                    ActivityTypeEntity(
-                                        name = "Meditation",
-                                        iconRes = R.drawable.icon_mind,
-                                        color = 0xFF29B6F6.toInt(),
-                                    ),
-                                    ActivityTypeEntity(
-                                        name = "Sport",
-                                        iconRes = R.drawable.icon_barbell,
-                                        color = 0xFFCDDC39.toInt(),
-                                    ),
-                                    ActivityTypeEntity(
-                                        name = "Other",
-                                        iconRes = R.drawable.icon_other,
-                                        color = 0xFF607D8B.toInt(),
-                                    ),
-                                )
-                            activityTypes.forEach { activityType ->
-                                database.activityTypeDao().insert(activityType)
-                            }
+                        activityTypes.forEach { activityType ->
+                            database.activityTypeDao().insert(activityType)
                         }
                     }
-                },
-            ).build()
+                }
+            }
+
+        val instance =
+            Room
+                .databaseBuilder(
+                    context,
+                    AppDatabase::class.java,
+                    "clotho_database",
+                ).addCallback(callback)
+                .build()
+
+        INSTANCE = instance
+
+        return instance
+    }
 
     @Provides
     @Singleton
