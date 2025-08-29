@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ mommy(prod-ready) ]
     types: [ closed ]
-    
+
 jobs:
   build:
     if: |
@@ -27,9 +27,6 @@ jobs:
       - name: Grant Execute Permission
         run: chmod +x gradlew
 
-#      - name: Run ktlint check
-#        run: ./gradlew ktlintCheck
-
       - name: Decode keystore
         run: echo "${{ secrets.APK_KEY_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/keystore.jks
 
@@ -42,6 +39,8 @@ jobs:
           echo "APK_KEY_ALIAS=${{ secrets.APK_KEY_ALIAS }}" >> $GITHUB_ENV
           echo "APK_KEY_PASSWORD=${{ secrets.APK_KEY_PASSWORD }}" >> $GITHUB_ENV
 
+      - name: Run ktlint check
+        run: ./gradlew ktlintCheck
 
       - name: Build APK
         run: ./gradlew assembleRelease
