@@ -1,4 +1,4 @@
-package polako.cloud.clotho.domain
+package polako.cloud.clotho.service
 
 import polako.cloud.clotho.domain.model.ActivityType
 import javax.inject.Inject

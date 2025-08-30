@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import polako.cloud.clotho.domain.ActivityManager
+import polako.cloud.clotho.service.ActivityManager
 import javax.inject.Singleton
 
 @Module

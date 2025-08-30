@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import polako.cloud.clotho.navigation.ClothoNavHost
 import polako.cloud.clotho.navigation.Routes
-import polako.cloud.clotho.ui.composables.BottomNavBar
+import polako.cloud.clotho.ui.composables.BottomNavWithCustomButton
 import polako.cloud.clotho.ui.theme.ClothoTheme
 
 @AndroidEntryPoint
@@ -38,7 +38,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     bottomBar = {
                         if (currentRoute == Routes.MAIN_SCREEN || currentRoute == Routes.HISTORY_SCREEN) {
-                            BottomNavBar(navController)
+                            BottomNavWithCustomButton(
+                                navController,
+                            )
                         }
                     },
                 ) { innerPadding ->
@@ -49,7 +51,9 @@ class MainActivity : ComponentActivity() {
                                 .padding(innerPadding),
                         color = MaterialTheme.colorScheme.background,
                     ) {
-                        ClothoNavHost(navController)
+                        ClothoNavHost(
+                            navController = navController,
+                        )
                     }
                 }
             }
