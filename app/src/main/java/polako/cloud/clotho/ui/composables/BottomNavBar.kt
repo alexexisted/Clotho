@@ -1,19 +1,26 @@
 package polako.cloud.clotho.ui.composables
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import polako.cloud.clotho.R
 import polako.cloud.clotho.navigation.Routes
 
 @Composable
@@ -43,6 +50,40 @@ fun BottomNavBar(navController: NavController) {
                         restoreState = true
                     }
                 },
+            )
+        }
+    }
+}
+
+@Composable
+fun BottomNavWithCustomButton(navController: NavController) {
+    Box {
+        BottomNavBar(navController)
+
+        Button(
+            onClick = { navController.navigate(Routes.SESSION_SETUP) },
+            modifier =
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-30).dp)
+                    .size(86.dp),
+            shape = CircleShape,
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.surface,
+                ),
+            elevation =
+                ButtonDefaults.buttonElevation(
+                    defaultElevation = 8.dp,
+                    pressedElevation = 12.dp,
+                ),
+            contentPadding = PaddingValues(0.dp),
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.stress_management_icon),
+                contentDescription = "Add",
+                modifier = Modifier.size(44.dp),
             )
         }
     }

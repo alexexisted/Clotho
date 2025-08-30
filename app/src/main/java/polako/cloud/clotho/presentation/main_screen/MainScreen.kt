@@ -3,7 +3,6 @@ package polako.cloud.clotho.presentation.main_screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -11,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import polako.cloud.clotho.ui.composables.MainMenuBgCard
-import polako.cloud.clotho.ui.composables.StartSessionButton
 
 @Composable
 fun MainScreen(
@@ -43,11 +41,6 @@ fun MainScreen(
             MainMenuBgCard()
 
             Spacer(modifier = Modifier.weight(1f))
-
-            StartSessionButton(
-                navController = navController,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            )
 
             Spacer(modifier = Modifier.height(32.dp))
         }
