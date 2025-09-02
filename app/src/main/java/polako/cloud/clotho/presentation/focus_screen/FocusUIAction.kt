@@ -1,13 +1,9 @@
 package polako.cloud.clotho.presentation.focus_screen
 
 sealed interface FocusUIAction {
-    object Start : FocusUIAction
-
-    object Stop : FocusUIAction
-
-    object Pause : FocusUIAction
-
-    object ShowReflection : FocusUIAction
+    data class ShowReflection(
+        val elapsedTimeMillis: Long,
+    ) : FocusUIAction
 
     data class SaveReflection(
         val score: Int,

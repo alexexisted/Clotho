@@ -18,14 +18,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import polako.cloud.clotho.navigation.Routes
 import polako.cloud.clotho.presentation.reflection_screen.ReflectionBS
+import polako.cloud.clotho.presentation.shared.SharedFocusViewModel
 import polako.cloud.clotho.ui.composables.Stopwatch
 
 @Composable
 fun FocusScreen(
     navController: NavController,
+    sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
     viewModel: FocusViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val sharedState by sharedFocusViewModel.stopwatchUiState.collectAsState()
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
 
     Box(
@@ -71,13 +74,17 @@ fun FocusScreen(
                 }
             }
             Stopwatch(
-                elapsedTime = state.elapsedTimeMillis,
-                isRunning = state.isRunning,
-                onPause = { viewModel.onAction(FocusUIAction.Pause) },
-                onStop = {
-                    viewModel.onAction(FocusUIAction.Stop)
+                elapsedTime = sharedState.elapsedTime,
+                isRunning = sharedState.isRunning,
+                onPause = {
+                    sharedFocusViewModel.pauseSession()
                 },
-                onStart = { viewModel.onAction(FocusUIAction.Start) },
+                onStop = {
+                    sharedFocusViewModel.pauseSession()
+                    viewModel.showReflection(sharedState.elapsedTime)
+                    sharedFocusViewModel.stopSession()
+                },
+                onStart = { sharedFocusViewModel.startSession() },
             )
             Spacer(modifier = Modifier.height(16.dp))
         }

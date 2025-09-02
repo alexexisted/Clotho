@@ -19,12 +19,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import polako.cloud.clotho.domain.model.FocusSessionWithDuration
+import polako.cloud.clotho.presentation.shared.SharedFocusViewModel
 import polako.cloud.clotho.ui.composables.SessionHistoryCard
 
 @Composable
 fun HistoryScreen(
     navController: NavController,
     viewModel: HistoryViewModel = hiltViewModel(),
+    sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
