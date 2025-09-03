@@ -9,12 +9,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import polako.cloud.clotho.presentation.shared.SharedFocusViewModel
 import polako.cloud.clotho.ui.composables.MainMenuBgCard
 
 @Composable
 fun MainScreen(
     navController: NavController,
     viewModel: MainMenuViewModel = hiltViewModel(),
+    sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
 

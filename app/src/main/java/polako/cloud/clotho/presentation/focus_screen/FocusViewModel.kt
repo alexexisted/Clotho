@@ -3,14 +3,10 @@ package polako.cloud.clotho.presentation.focus_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import polako.cloud.clotho.data.repository.ActivityTypeRepository
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.ActivityType
@@ -27,24 +23,18 @@ class FocusViewModel
     constructor(
         private val activityManager: ActivityManager,
         private val focusSessionRepository: FocusSessionRepository,
-        private val activityTypeRepository: ActivityTypeRepository,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(FocusUiState())
         val uiState: StateFlow<FocusUiState> = _uiState.asStateFlow()
 
         fun onAction(action: FocusUIAction) {
             when (action) {
-                FocusUIAction.Start -> startTimer()
-                FocusUIAction.Pause -> pauseTimer()
-                FocusUIAction.Stop -> stopTimer()
-                FocusUIAction.ShowReflection -> showReflection()
+                is FocusUIAction.ShowReflection -> showReflection(action.elapsedTimeMillis)
                 is FocusUIAction.SaveReflection -> saveReflection(action.score, action.tags)
                 FocusUIAction.DismissReflection -> dismissReflection()
                 FocusUIAction.OnSuccess -> {}
             }
         }
-
-        private var timerJob: Job? = null
 
         init {
             activityManager.selectedActivity?.let { activity ->
@@ -60,46 +50,13 @@ class FocusViewModel
             }
         }
 
-        private fun startTimer() {
-            if (_uiState.value.isRunning) return
-
-            _uiState.update { it.copy(isRunning = true, isPaused = false) }
-
-            timerJob =
-                viewModelScope.launch {
-                    val startTime = System.currentTimeMillis() - _uiState.value.elapsedTimeMillis
-                    while (isActive) {
-                        val elapsed = System.currentTimeMillis() - startTime
-                        _uiState.update { it.copy(elapsedTimeMillis = elapsed) }
-                        delay(100L)
-                    }
-                }
-        }
-
-        private fun pauseTimer() {
-            _uiState.update { it.copy(isRunning = false, isPaused = true) }
-            timerJob?.cancel()
-        }
-
-        private fun stopTimer() {
-            _uiState.update {
-                it.copy(
-                    isRunning = false,
-                    isPaused = false,
-                    isFinished = true,
-                )
-            }
-            timerJob?.cancel()
-
-            showReflection()
-        }
-
-        private fun showReflection() {
+        fun showReflection(elapsedTime: Long) {
             _uiState.update {
                 it.copy(
                     showReflectionBottomSheet = true,
                     initialReflectionScore = 5F,
                     selectedTags = emptyList(),
+                    elapsedTimeMillis = elapsedTime,
                 )
             }
         }
@@ -108,7 +65,6 @@ class FocusViewModel
             _uiState.update {
                 it.copy(
                     showReflectionBottomSheet = false,
-                    lastSessionId = null,
                 )
             }
         }
@@ -123,7 +79,6 @@ class FocusViewModel
                     selectedTags = tags,
                 )
             }
-
             saveFocusSession()
         }
 
@@ -159,9 +114,6 @@ class FocusViewModel
 
 data class FocusUiState(
     val activity: ActivityType? = null,
-    val isPaused: Boolean = false,
-    val isFinished: Boolean = false,
-    val isRunning: Boolean = false,
     val elapsedTimeMillis: Long = 0L,
     val showReflectionBottomSheet: Boolean = false,
     val initialReflectionScore: Float = 5F,
@@ -185,5 +137,4 @@ data class FocusUiState(
             "Overwhelmed",
         ),
     val selectedTags: List<String> = emptyList(),
-    val lastSessionId: Long? = null,
 )
