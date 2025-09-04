@@ -21,17 +21,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import polako.cloud.clotho.navigation.Routes
+import polako.cloud.clotho.presentation.shared.SharedFocusViewModel
 import polako.cloud.clotho.ui.composables.ActivityItem
 
 @Composable
 fun SessionSetupScreen(
     navController: NavController,
     viewModel: SessionSetupViewModel = hiltViewModel(),
+    sharedViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
 
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
-
     Box(
         modifier =
             Modifier
@@ -79,10 +81,13 @@ fun SessionSetupScreen(
                 items(state.activityTypesLists) { activityType ->
                     ActivityItem(
                         activity = activityType,
-//                        onSelected = { viewModel.onActivityTypeSelected(activityType) },
                     ) {
                         viewModel.onActivityTypeSelected(activityType)
-                        navController.navigate(polako.cloud.clotho.navigation.Routes.FOCUS_SCREEN)
+                        navController.navigate(Routes.FOCUS_SCREEN) {
+                            popUpTo(Routes.SESSION_SETUP) {
+                                inclusive = true
+                            }
+                        }
                     }
                 }
             }

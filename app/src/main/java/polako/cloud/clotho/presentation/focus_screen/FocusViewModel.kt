@@ -1,5 +1,6 @@
 package polako.cloud.clotho.presentation.focus_screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,7 +8,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import polako.cloud.clotho.data.repository.ActivityTypeRepository
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.ActivityType
 import polako.cloud.clotho.domain.model.FocusSession
@@ -44,6 +44,7 @@ class FocusViewModel
 
         fun setActivity(activity: ActivityType) {
             _uiState.update {
+                Log.d("DEBUG-FOCUSl", activity.toString())
                 it.copy(
                     activity = activity,
                 )

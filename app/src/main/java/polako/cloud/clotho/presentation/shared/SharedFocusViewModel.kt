@@ -3,9 +3,13 @@ package polako.cloud.clotho.presentation.shared
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import polako.cloud.clotho.data.repository.FocusTimerGlobalUIState
 import polako.cloud.clotho.data.repository.FocusTimerRepository
-import polako.cloud.clotho.data.repository.FocusTimerUIAction
+import polako.cloud.clotho.utils.execute
 import javax.inject.Inject
 
 /**
@@ -23,55 +27,13 @@ class SharedFocusViewModel
     constructor(
         private val repository: FocusTimerRepository,
     ) : ViewModel() {
-        val timerState: StateFlow<FocusTimerUIAction> = repository.uiStateTimer
+        val globalUiState: StateFlow<FocusTimerGlobalUIState> = repository.globalUiState
 
-        private val _stopwatchUiState = MutableStateFlow(SharedFocusUiState())
-        val stopwatchUiState: StateFlow<SharedFocusUiState> = _stopwatchUiState.asStateFlow()
-
-        init {
-            timerState
-                .onEach { state ->
-                    when (state) {
-                        is FocusTimerUIAction.Running ->
-                            _stopwatchUiState.value =
-                                SharedFocusUiState(
-                                    elapsedTime = state.elapsedTimeMillis,
-                                    isRunning = true,
-                                    isPaused = false,
-                                )
-
-                        is FocusTimerUIAction.Paused ->
-                            _stopwatchUiState.value =
-                                SharedFocusUiState(
-                                    elapsedTime = state.elapsedTimeMillis,
-                                    isRunning = false,
-                                    isPaused = true,
-                                )
-
-                        is FocusTimerUIAction.Idle ->
-                            _stopwatchUiState.value =
-                                SharedFocusUiState(
-                                    elapsedTime = 0L,
-                                    isRunning = false,
-                                )
-
-                        is FocusTimerUIAction.ElapsedTimeMillis ->
-                            _stopwatchUiState.value =
-                                _stopwatchUiState.value.copy(
-                                    elapsedTime = state.elapsedTimeMillis,
-                                )
-
-                        is FocusTimerUIAction.RunningState ->
-                            _stopwatchUiState.value =
-                                _stopwatchUiState.value.copy(
-                                    isRunning = state.isRunning && !state.isPaused,
-                                )
-                    }
-                }.launchIn(viewModelScope)
-        }
+        private val _uiAction = MutableSharedFlow<SharedFocusUIAction>()
+        val uiAction: SharedFlow<SharedFocusUIAction> = _uiAction.asSharedFlow()
 
         fun startSession() {
-            if (_stopwatchUiState.value.isPaused) {
+            if (globalUiState.value.isPaused) {
                 resumeSession()
             } else {
                 repository.startTimer()
@@ -89,11 +51,14 @@ class SharedFocusViewModel
         fun stopSession() {
             repository.stopTimer()
         }
+
+        fun navigateToFocusScreen() {
+            viewModelScope.execute(
+                source = { _uiAction.emit(SharedFocusUIAction.NavigateToFocusScreen) },
+            )
+        }
     }
 
-data class SharedFocusUiState(
-    val elapsedTime: Long = 0L,
-    val isRunning: Boolean = false,
-    val isPaused: Boolean = false,
-    val isStopped: Boolean = false,
-)
+sealed interface SharedFocusUIAction {
+    object NavigateToFocusScreen : SharedFocusUIAction
+}

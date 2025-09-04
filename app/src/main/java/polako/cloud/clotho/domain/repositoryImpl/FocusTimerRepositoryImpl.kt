@@ -6,8 +6,10 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import polako.cloud.clotho.data.repository.FocusTimerGlobalUIState
 import polako.cloud.clotho.data.repository.FocusTimerRepository
-import polako.cloud.clotho.data.repository.FocusTimerUIAction
+import polako.cloud.clotho.service.ActivityManager
 import polako.cloud.clotho.service.FocusTimerForegroundService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,14 +19,13 @@ class FocusTimerRepositoryImpl
     @Inject
     constructor(
         private val context: Context,
+        private val activityManager: ActivityManager,
     ) : FocusTimerRepository {
         @Suppress("ktlint:standard:backing-property-naming")
-        private val _uiStateTimer = MutableStateFlow<FocusTimerUIAction>(FocusTimerUIAction.Idle)
-        override val uiStateTimer: StateFlow<FocusTimerUIAction> = _uiStateTimer.asStateFlow()
+        private val _globalUIState = MutableStateFlow(FocusTimerGlobalUIState())
+        override val globalUiState: StateFlow<FocusTimerGlobalUIState> = _globalUIState.asStateFlow()
 
         private var currentElapsedTimeMillis: Long = 0L
-        private var isRunning: Boolean = false
-        private var isPaused: Boolean = false
 
         override fun startTimer() {
             val intent =
@@ -34,11 +35,13 @@ class FocusTimerRepositoryImpl
                 }
             ContextCompat.startForegroundService(context, intent)
 
-            isRunning = true
-            isPaused = false
-            currentElapsedTimeMillis = 0L
-
-            _uiStateTimer.value = FocusTimerUIAction.Running(elapsedTimeMillis = currentElapsedTimeMillis)
+            _globalUIState.update {
+                it.copy(
+                    elapsedTimeMillis = currentElapsedTimeMillis,
+                    activityType = activityManager.selectedActivity,
+                    isRunning = true,
+                )
+            }
         }
 
         override fun stopTimer() {
@@ -47,7 +50,13 @@ class FocusTimerRepositoryImpl
                     action = FocusTimerForegroundService.ACTION_STOP
                 }
             ContextCompat.startForegroundService(context, intent)
-            _uiStateTimer.value = FocusTimerUIAction.Idle
+            _globalUIState.update {
+                it.copy(
+                    isPaused = false,
+                    isRunning = false,
+                    elapsedTimeMillis = 0L,
+                )
+            }
         }
 
         override fun pauseTimer() {
@@ -57,9 +66,11 @@ class FocusTimerRepositoryImpl
                 }
             ContextCompat.startForegroundService(context, intent)
 
-            val currentState = uiStateTimer.value
-            if (currentState is FocusTimerUIAction.Running) {
-                _uiStateTimer.value = FocusTimerUIAction.Paused(elapsedTimeMillis = currentState.elapsedTimeMillis)
+            _globalUIState.update {
+                it.copy(
+                    isRunning = true,
+                    isPaused = true,
+                )
             }
         }
 
@@ -70,26 +81,19 @@ class FocusTimerRepositoryImpl
                 }
             ContextCompat.startForegroundService(context, intent)
 
-            val currentState = uiStateTimer.value
-            if (currentState is FocusTimerUIAction.Paused) {
-                _uiStateTimer.value = FocusTimerUIAction.Running(elapsedTimeMillis = currentState.elapsedTimeMillis)
+            _globalUIState.update {
+                it.copy(
+                    isRunning = true,
+                    isPaused = false,
+                )
             }
         }
 
         override fun onTick(elapsed: Long) {
-            val currentState = uiStateTimer.value
-            when (currentState) {
-                is FocusTimerUIAction.Running -> {
-                    _uiStateTimer.value = FocusTimerUIAction.Running(elapsedTimeMillis = elapsed)
-                }
-
-                is FocusTimerUIAction.Paused -> {
-                    _uiStateTimer.value = FocusTimerUIAction.Paused(elapsedTimeMillis = elapsed)
-                }
-
-                else -> {
-                    _uiStateTimer.value = FocusTimerUIAction.ElapsedTimeMillis(elapsed)
-                }
+            _globalUIState.update {
+                it.copy(
+                    elapsedTimeMillis = elapsed,
+                )
             }
         }
     }

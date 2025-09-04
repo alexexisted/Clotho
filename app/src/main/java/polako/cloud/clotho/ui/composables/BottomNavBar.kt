@@ -17,11 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import polako.cloud.clotho.R
 import polako.cloud.clotho.navigation.Routes
+import polako.cloud.clotho.presentation.shared.SharedFocusViewModel
 
 @Composable
 fun BottomNavBar(navController: NavController) {
@@ -56,12 +58,21 @@ fun BottomNavBar(navController: NavController) {
 }
 
 @Composable
-fun BottomNavWithCustomButton(navController: NavController) {
+fun BottomNavWithCustomButton(
+    navController: NavController,
+    sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
+) {
     Box {
         BottomNavBar(navController)
 
         Button(
-            onClick = { navController.navigate(Routes.SESSION_SETUP) },
+            onClick = {
+                if (sharedFocusViewModel.globalUiState.value.isRunning) {
+                    navController.navigate(Routes.FOCUS_SCREEN)
+                } else {
+                    navController.navigate(Routes.SESSION_SETUP)
+                }
+            },
             modifier =
                 Modifier
                     .align(Alignment.BottomCenter)
