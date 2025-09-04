@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 fun Stopwatch(
     elapsedTime: Long,
     isRunning: Boolean,
+    isPaused: Boolean,
     onStart: () -> Unit,
     onPause: () -> Unit,
     onStop: () -> Unit,
@@ -33,7 +34,23 @@ fun Stopwatch(
         Spacer(modifier = Modifier.padding(vertical = 50.dp))
 
         Row {
-            if (isRunning) {
+            if (isPaused) {
+                ElevatedButton(
+                    onClick = onStart,
+                    colors =
+                        ButtonColors(
+                            containerColor = MaterialTheme.colorScheme.inversePrimary,
+                            contentColor = MaterialTheme.colorScheme.surface,
+                            disabledContainerColor = MaterialTheme.colorScheme.error,
+                            disabledContentColor = MaterialTheme.colorScheme.secondary,
+                        ),
+                    elevation =
+                        ButtonDefaults.buttonElevation(
+                            defaultElevation = 8.dp,
+                            pressedElevation = 12.dp,
+                        ),
+                ) { Text("Start") }
+            } else if (isRunning) {
                 ElevatedButton(
                     onClick = onPause,
                     colors =

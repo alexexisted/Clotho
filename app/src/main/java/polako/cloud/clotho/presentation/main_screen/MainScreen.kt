@@ -3,14 +3,20 @@ package polako.cloud.clotho.presentation.main_screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import polako.cloud.clotho.navigation.Routes
+import polako.cloud.clotho.presentation.shared.SharedFocusUIAction
 import polako.cloud.clotho.presentation.shared.SharedFocusViewModel
 import polako.cloud.clotho.ui.composables.MainMenuBgCard
+import polako.cloud.clotho.ui.composables.MainScreenRunningSessionCard
 
 @Composable
 fun MainScreen(
@@ -19,6 +25,17 @@ fun MainScreen(
     sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
+    val globalUIState by sharedFocusViewModel.globalUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        sharedFocusViewModel.uiAction.collect { action ->
+            when (action) {
+                SharedFocusUIAction.NavigateToFocusScreen -> {
+                    navController.navigate(Routes.FOCUS_SCREEN)
+                }
+            }
+        }
+    }
 
     Box(
         modifier =
@@ -41,6 +58,20 @@ fun MainScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             MainMenuBgCard()
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            if (globalUIState.isRunning) {
+                globalUIState.activityType?.let { activity ->
+                    MainScreenRunningSessionCard(
+                        onClick = {
+                            sharedFocusViewModel.navigateToFocusScreen()
+                        },
+                        session = activity,
+                        elapsedTime = globalUIState.elapsedTimeMillis,
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.weight(1f))
 
