@@ -1,9 +1,10 @@
 package polako.cloud.clotho.data.repository
 
 import kotlinx.coroutines.flow.StateFlow
+import polako.cloud.clotho.domain.model.ActivityType
 
 interface FocusTimerRepository {
-    val uiStateTimer: StateFlow<FocusTimerUIAction>
+    val globalUiState: StateFlow<FocusTimerGlobalUIState>
 
     fun startTimer()
 
@@ -16,23 +17,9 @@ interface FocusTimerRepository {
     fun onTick(elapsed: Long)
 }
 
-sealed class FocusTimerUIAction {
-    data class ElapsedTimeMillis(
-        val elapsedTimeMillis: Long,
-    ) : FocusTimerUIAction()
-
-    data class RunningState(
-        val isPaused: Boolean,
-        val isRunning: Boolean,
-    ) : FocusTimerUIAction()
-
-    data object Idle : FocusTimerUIAction()
-
-    data class Running(
-        val elapsedTimeMillis: Long,
-    ) : FocusTimerUIAction()
-
-    data class Paused(
-        val elapsedTimeMillis: Long,
-    ) : FocusTimerUIAction()
-}
+data class FocusTimerGlobalUIState(
+    val elapsedTimeMillis: Long = 0L,
+    val activityType: ActivityType? = null,
+    val isPaused: Boolean = false,
+    val isRunning: Boolean = false,
+)

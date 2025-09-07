@@ -39,8 +39,13 @@ fun ClothoNavHost(
             MainScreen(navController, sharedFocusViewModel = sharedVM)
         }
 
-        composable(Routes.SESSION_SETUP) {
-            SessionSetupScreen(navController)
+        composable(Routes.SESSION_SETUP) { backStackEntry ->
+            val parentEntry =
+                remember(backStackEntry) {
+                    navController.getBackStackEntry(Routes.MAIN_GRAPH)
+                }
+            val sharedVM: SharedFocusViewModel = hiltViewModel(parentEntry)
+            SessionSetupScreen(navController, sharedViewModel = sharedVM)
         }
 
         composable(Routes.FOCUS_SCREEN) { backStackEntry ->
