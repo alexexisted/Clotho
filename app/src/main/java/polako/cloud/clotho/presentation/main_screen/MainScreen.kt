@@ -26,6 +26,7 @@ fun MainScreen(
 ) {
     val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
     val globalUIState by sharedFocusViewModel.globalUiState.collectAsStateWithLifecycle()
+    val localState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         sharedFocusViewModel.uiAction.collect { action ->
@@ -57,7 +58,7 @@ fun MainScreen(
         ) {
             Spacer(modifier = Modifier.height(10.dp))
 
-            MainMenuBgCard()
+            MainMenuBgCard(localState.sessionsAmount, localState.sessionsTime)
 
             Spacer(modifier = Modifier.height(10.dp))
 
