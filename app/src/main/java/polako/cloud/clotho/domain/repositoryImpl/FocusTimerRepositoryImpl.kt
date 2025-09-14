@@ -1,5 +1,6 @@
 package polako.cloud.clotho.domain.repositoryImpl
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
@@ -11,6 +12,7 @@ import polako.cloud.clotho.data.repository.FocusTimerGlobalUIState
 import polako.cloud.clotho.data.repository.FocusTimerRepository
 import polako.cloud.clotho.service.ActivityManager
 import polako.cloud.clotho.service.FocusTimerForegroundService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,6 +57,7 @@ class FocusTimerRepositoryImpl
                     isPaused = false,
                     isRunning = false,
                     elapsedTimeMillis = 0L,
+                    elapsedTimeUIModel = "00:00",
                 )
             }
         }
@@ -93,7 +96,21 @@ class FocusTimerRepositoryImpl
             _globalUIState.update {
                 it.copy(
                     elapsedTimeMillis = elapsed,
+                    elapsedTimeUIModel = formatElapsedTime(elapsed),
                 )
+            }
+        }
+
+        @SuppressLint("DefaultLocale")
+        private fun formatElapsedTime(timeMillis: Long): String {
+            val hours = TimeUnit.MILLISECONDS.toHours(timeMillis)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(timeMillis) % 60
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis) % 60
+
+            return if (hours > 0) {
+                String.format("%02d:%02d:%02d", hours, minutes, seconds)
+            } else {
+                String.format("%02d:%02d", minutes, seconds)
             }
         }
     }

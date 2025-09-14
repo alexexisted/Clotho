@@ -1,6 +1,5 @@
 package polako.cloud.clotho.presentation.history_screen
 
-import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,10 +11,8 @@ import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.FocusSession
 import polako.cloud.clotho.domain.model.FocusSessionWithDuration
 import polako.cloud.clotho.domain.model.toSessionUIModelWithDuration
+import polako.cloud.clotho.service.TimeTransformManager
 import polako.cloud.clotho.utils.execute
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,39 +50,19 @@ class HistoryViewModel
                     focusSessionRepository.getAllSessionsAsUIModels()
                 },
                 onSuccess = { uiModels ->
+                    val sortedModels = uiModels.reversed()
                     _uiState.update {
                         it.copy(
                             uiModelSession =
-                                uiModels.map { session ->
+                                sortedModels.map { session ->
                                     session.toSessionUIModelWithDuration(
-                                        formatDuration(session.duration),
+                                        TimeTransformManager.formatElapsedTime(session.duration.toMillis()),
                                     )
                                 },
                         )
                     }
                 },
             )
-        }
-
-        private fun formatDate(startTime: LocalDateTime): String {
-            val formatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
-            return startTime.format(formatter)
-        }
-
-        private fun formatDuration(duration: Duration): String {
-            val hours = duration.toHours()
-            val minutes =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    duration.toMinutesPart()
-                } else {
-                    TODO("VERSION.SDK_INT < S")
-                }
-
-            return if (hours > 0) {
-                "$hours h $minutes min"
-            } else {
-                "$minutes min"
-            }
         }
     }
 

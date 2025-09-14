@@ -52,13 +52,15 @@ class FocusViewModel
         }
 
         fun showReflection(elapsedTime: Long) {
-            _uiState.update {
-                it.copy(
-                    showReflectionBottomSheet = true,
-                    initialReflectionScore = 5F,
-                    selectedTags = emptyList(),
-                    elapsedTimeMillis = elapsedTime,
-                )
+            if (elapsedTime > 0L) {
+                _uiState.update {
+                    it.copy(
+                        showReflectionBottomSheet = true,
+                        initialReflectionScore = 5F,
+                        selectedTags = emptyList(),
+                        elapsedTimeMillis = elapsedTime,
+                    )
+                }
             }
         }
 

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import polako.cloud.clotho.data.repository.ActivityTypeRepository
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.FocusSession
+import polako.cloud.clotho.service.TimeTransformManager
 import polako.cloud.clotho.utils.execute
 import javax.inject.Inject
 
@@ -45,17 +46,20 @@ class MainMenuViewModel
                     _uiState.update {
                         it.copy(
                             sessionsAmount = sessions.size,
-                            sessionsTime = calculateSessionsTime(sessions),
+                            sessionsDurationUIModel =
+                                TimeTransformManager.formatElapsedTime(
+                                    calculateSessionsTime(sessions),
+                                ),
                         )
                     }
                 },
             )
         }
 
-        private fun calculateSessionsTime(sessions: List<FocusSession>): Int {
-            var duration = 0
+        private fun calculateSessionsTime(sessions: List<FocusSession>): Long {
+            var duration = 0L
             sessions.forEach { session ->
-                duration += session.duration.toMinutesPart()
+                duration += session.duration.toMillis()
             }
             return duration
         }
@@ -63,6 +67,6 @@ class MainMenuViewModel
 
 data class MainMenuUiState(
     val isLoading: Boolean = false,
-    val sessionsTime: Int = 0,
+    val sessionsDurationUIModel: String = "0:0",
     val sessionsAmount: Int = 0,
 )

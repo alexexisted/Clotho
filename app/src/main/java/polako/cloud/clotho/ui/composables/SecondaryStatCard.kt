@@ -38,7 +38,7 @@ fun SecondaryStatCard(
         ) {
             Text(
                 text = value,
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineSmall,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
             )

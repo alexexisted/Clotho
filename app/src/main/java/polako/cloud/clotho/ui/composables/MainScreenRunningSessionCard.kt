@@ -1,12 +1,11 @@
 package polako.cloud.clotho.ui.composables
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -74,20 +73,11 @@ fun MainScreenRunningSessionCard(
                     )
                 }
             }
-
-//            IconButton(
-//                onClick = {},
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Default.PlayArrow,
-//                    contentDescription = "Start",
-//                    tint = MaterialTheme.colorScheme.primary,
-//                )
-//            }
         }
     }
 }
 
+@SuppressLint("DefaultLocale")
 private fun formatElapsedTime(timeMillis: Long): String {
     val hours = TimeUnit.MILLISECONDS.toHours(timeMillis)
     val minutes = TimeUnit.MILLISECONDS.toMinutes(timeMillis) % 60
