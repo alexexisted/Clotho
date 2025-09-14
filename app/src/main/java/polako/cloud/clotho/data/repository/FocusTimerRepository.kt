@@ -19,6 +19,7 @@ interface FocusTimerRepository {
 
 data class FocusTimerGlobalUIState(
     val elapsedTimeMillis: Long = 0L,
+    val elapsedTimeUIModel: String = "0",
     val activityType: ActivityType? = null,
     val isPaused: Boolean = false,
     val isRunning: Boolean = false,

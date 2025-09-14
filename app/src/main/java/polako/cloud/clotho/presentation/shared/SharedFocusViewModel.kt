@@ -41,7 +41,9 @@ class SharedFocusViewModel
         }
 
         fun pauseSession() {
-            repository.pauseTimer()
+            if (canStopTheSession()) {
+                repository.pauseTimer()
+            }
         }
 
         fun resumeSession() {
@@ -49,7 +51,9 @@ class SharedFocusViewModel
         }
 
         fun stopSession() {
-            repository.stopTimer()
+            if (canStopTheSession()) {
+                repository.stopTimer()
+            }
         }
 
         fun navigateToFocusScreen() {
@@ -57,6 +61,8 @@ class SharedFocusViewModel
                 source = { _uiAction.emit(SharedFocusUIAction.NavigateToFocusScreen) },
             )
         }
+
+        private fun canStopTheSession(): Boolean = globalUiState.value.isRunning
     }
 
 sealed interface SharedFocusUIAction {

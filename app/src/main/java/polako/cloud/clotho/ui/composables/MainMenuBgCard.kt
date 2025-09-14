@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun MainMenuBgCard(
     sessionsAmount: Int,
-    sessionsTime: Int,
+    sessionsTime: String,
 ) {
     Card(
         modifier =
@@ -61,18 +61,18 @@ fun MainMenuBgCard(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 SecondaryStatCard(
                     value = sessionsAmount.toString(),
-                    label = "Focus sessions",
-                    modifier = Modifier.weight(1f),
+                    label = "Sessions",
+                    modifier = Modifier.weight(0.7f),
                 )
 
                 SecondaryStatCard(
-                    value = "$sessionsTime min",
+                    value = sessionsTime,
                     label = "Focus duration",
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1.3f),
                 )
             }
         }

@@ -58,7 +58,7 @@ fun MainScreen(
         ) {
             Spacer(modifier = Modifier.height(10.dp))
 
-            MainMenuBgCard(localState.sessionsAmount, localState.sessionsTime)
+            MainMenuBgCard(localState.sessionsAmount, localState.sessionsDurationUIModel)
 
             Spacer(modifier = Modifier.height(10.dp))
 
