@@ -11,7 +11,7 @@ import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.FocusSession
 import polako.cloud.clotho.domain.model.FocusSessionWithDuration
 import polako.cloud.clotho.domain.model.toSessionUIModelWithDuration
-import polako.cloud.clotho.service.TimeTransformManager
+import polako.cloud.clotho.utils.TimeTransformManager
 import polako.cloud.clotho.utils.execute
 import javax.inject.Inject
 

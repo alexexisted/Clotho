@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.ActivityType
 import polako.cloud.clotho.domain.model.FocusSession
-import polako.cloud.clotho.service.ActivityManager
+import polako.cloud.clotho.utils.ActivityManager
 import polako.cloud.clotho.utils.execute
 import java.time.Duration
 import java.time.LocalDateTime

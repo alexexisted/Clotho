@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import polako.cloud.clotho.data.repository.ActivityTypeRepository
 import polako.cloud.clotho.data.repository.FocusSessionRepository
 import polako.cloud.clotho.domain.model.FocusSession
-import polako.cloud.clotho.service.TimeTransformManager
+import polako.cloud.clotho.utils.TimeTransformManager
 import polako.cloud.clotho.utils.execute
 import javax.inject.Inject
 

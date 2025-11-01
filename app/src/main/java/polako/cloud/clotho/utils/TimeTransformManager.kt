@@ -1,4 +1,4 @@
-package polako.cloud.clotho.service
+package polako.cloud.clotho.utils
 
 import android.annotation.SuppressLint
 import java.util.concurrent.TimeUnit

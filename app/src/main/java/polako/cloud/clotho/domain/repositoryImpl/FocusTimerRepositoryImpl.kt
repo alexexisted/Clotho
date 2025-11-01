@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import polako.cloud.clotho.data.repository.FocusTimerGlobalUIState
 import polako.cloud.clotho.data.repository.FocusTimerRepository
-import polako.cloud.clotho.service.ActivityManager
+import polako.cloud.clotho.utils.ActivityManager
 import polako.cloud.clotho.service.FocusTimerForegroundService
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

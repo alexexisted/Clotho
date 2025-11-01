@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import polako.cloud.clotho.data.repository.FocusTimerRepository
 import polako.cloud.clotho.domain.repositoryImpl.FocusTimerRepositoryImpl
-import polako.cloud.clotho.service.ActivityManager
+import polako.cloud.clotho.utils.ActivityManager
 import javax.inject.Singleton
 
 @Module
