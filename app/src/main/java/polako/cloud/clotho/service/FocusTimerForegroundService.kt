@@ -155,7 +155,9 @@ class FocusTimerForegroundService : Service() {
             .setContentText("Running: $timeText")
             .setSmallIcon(R.drawable.stress_management_icon)
             .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setSilent(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOnlyAlertOnce(true)
             .setOngoing(true)
             .build()
     }
@@ -165,7 +167,7 @@ class FocusTimerForegroundService : Service() {
             NotificationChannel(
                 CHANNEL_ID,
                 "Focus Timer",
-                NotificationManager.IMPORTANCE_DEFAULT,
+                NotificationManager.IMPORTANCE_LOW,
             )
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nm.createNotificationChannel(channel)

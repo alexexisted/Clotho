@@ -1,17 +1,23 @@
 package polako.cloud.clotho.ui.theme
 
 import android.os.Build
+import polako.cloud.clotho.R
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme =
     darkColorScheme(
-        primary = Lazur,
-        secondary = Jet,
-        tertiary = Violet,
-        background = Jet,
+        primary = DarkBg,
+        secondary = Violet,
+        tertiary = Poppy,
+        background = DarkBg,
         surface = Platinum,
         error = Poppy,
         inversePrimary = DartGreen,
@@ -19,10 +25,10 @@ private val DarkColorScheme =
 
 private val LightColorScheme =
     lightColorScheme(
-        primary = Lazur,
-        secondary = Jet,
-        tertiary = Violet,
-        background = Jet,
+        primary = DarkBg,
+        secondary = Violet,
+        tertiary = Poppy,
+        background = DarkBg,
         surface = Platinum,
         error = Poppy,
         inversePrimary = DartGreen,
@@ -37,10 +43,73 @@ private val LightColorScheme =
      */
     )
 
+val rubikFamily = FontFamily(
+    Font(R.font.rubik_black),
+    Font(R.font.rubik_bold, FontWeight.Bold),
+    Font(R.font.rubik_light, FontWeight.Light),
+    Font(R.font.rubik_medium, FontWeight.Medium),
+)
+
+val ClothoTypography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 48.sp,
+        lineHeight = 32.sp
+    ),
+    displayMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 32.sp,
+        lineHeight = 20.sp
+    ),
+    displaySmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 24.sp,
+        lineHeight = 24.sp
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 20.sp,
+        lineHeight = 24.sp
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 16.sp,
+        lineHeight = 24.sp
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 16.sp,
+        lineHeight = 20.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 14.sp,
+        lineHeight = 20.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp,
+        lineHeight = 14.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp,
+        lineHeight = 20.sp
+    )
+)
+
 @Composable
 fun ClothoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
@@ -57,7 +126,7 @@ fun ClothoTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = ClothoTypography,
         content = content,
     )
 }

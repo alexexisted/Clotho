@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,11 +34,12 @@ fun SessionSetupScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
+    val gradientColors = listOf(Color(0xFF1E1A3D), Color(0xFF5D10FD))
     Box(
         modifier =
             Modifier
                 .fillMaxSize()
+                .systemBarsPadding()
                 .background(
                     brush =
                         Brush.linearGradient(
@@ -53,7 +55,7 @@ fun SessionSetupScreen(
                     .align(Alignment.TopStart),
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
                 tint = Color.White,
             )
@@ -68,9 +70,10 @@ fun SessionSetupScreen(
         ) {
             Text(
                 text = "Choose the Activity",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineLarge,
                 color = Color.White,
-                modifier = Modifier.padding(vertical = 20.dp),
+                modifier = Modifier
+                    .padding(vertical = 25.dp),
             )
 
             LazyVerticalGrid(

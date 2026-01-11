@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import polako.cloud.clotho.ui.composables.ReflectionSlider
 import polako.cloud.clotho.ui.composables.ReflectionTagChips
@@ -30,7 +31,7 @@ fun ReflectionBS(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF1E2A38))
+                    .background(Color(0xFF5D10FD))
                     .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
@@ -47,7 +48,7 @@ fun ReflectionBS(
 
             Text(
                 text = "How did you feel?",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.headlineSmall,
                 color = Color.White,
             )
             ReflectionTagChips(
@@ -67,7 +68,7 @@ fun ReflectionBS(
             Button(
                 colors =
                     ButtonColors(
-                        containerColor = MaterialTheme.colorScheme.inversePrimary,
+                        containerColor = Color(0xFF1E1A3D),
                         contentColor = MaterialTheme.colorScheme.background,
                         disabledContainerColor = MaterialTheme.colorScheme.error,
                         disabledContentColor = MaterialTheme.colorScheme.secondary,
@@ -83,3 +84,15 @@ fun ReflectionBS(
         }
     }
 }
+
+//@Preview
+//@Composable
+//fun PreviewBs() {
+//    ReflectionBS(
+//        onDismissRequest = {},
+////        onSaveClicked = ,
+//        reflectionScore = 5f,
+//        reflectionTags = listOf("wefwef", "good2","wefwef3", "good3","wefwef11", "good"),
+//        selectedTags = listOf("wefwef2")
+//    )
+//}

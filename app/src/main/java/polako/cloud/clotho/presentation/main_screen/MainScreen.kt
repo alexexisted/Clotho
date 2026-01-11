@@ -1,7 +1,13 @@
 package polako.cloud.clotho.presentation.main_screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,7 +30,7 @@ fun MainScreen(
     viewModel: MainMenuViewModel = hiltViewModel(),
     sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
-    val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
+    val gradientColors = listOf(Color(0xFF1E1A3D), Color(0xFF5D10FD))
     val globalUIState by sharedFocusViewModel.globalUiState.collectAsStateWithLifecycle()
     val localState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -45,7 +51,7 @@ fun MainScreen(
                 .background(
                     brush =
                         Brush.linearGradient(
-                            gradientColors,
+                            gradientColors
                         ),
                 ),
     ) {
@@ -76,7 +82,7 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }

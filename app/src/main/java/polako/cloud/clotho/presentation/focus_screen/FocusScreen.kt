@@ -2,7 +2,10 @@ package polako.cloud.clotho.presentation.focus_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +32,7 @@ fun FocusScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val globalState by sharedFocusViewModel.globalUiState.collectAsState()
-    val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
+    val gradientColors = listOf(Color(0xFF1E1A3D), Color(0xFF5D10FD))
 
     Box(
         modifier =
@@ -42,6 +45,19 @@ fun FocusScreen(
                         ),
                 ),
     ) {
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier =
+                Modifier
+                    .padding(25.dp)
+                    .align(Alignment.TopStart),
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.White,
+            )
+        }
         Column(
             modifier =
                 Modifier
@@ -68,7 +84,7 @@ fun FocusScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = activity.name,
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.headlineLarge,
                         color = Color.White,
                     )
                 }

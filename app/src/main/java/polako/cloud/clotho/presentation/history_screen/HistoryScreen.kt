@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,7 +30,7 @@ fun HistoryScreen(
     sharedFocusViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
-    val gradientColors = listOf(Color(0xFF006187), Color(0xFF313131))
+    val gradientColors = listOf(Color(0xFF1E1A3D), Color(0xFF5D10FD))
 
     viewModel.showHistory()
 
@@ -54,9 +55,8 @@ fun HistoryScreen(
             Text(
                 text = "Session History",
                 color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 16.dp),
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(bottom = 16.dp, top = 25.dp),
             )
 
             if (state.sessions.isEmpty()) {

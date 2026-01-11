@@ -81,7 +81,7 @@ fun BottomNavWithCustomButton(
             shape = CircleShape,
             colors =
                 ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = Color(0xFF1E1A3D),
                     contentColor = MaterialTheme.colorScheme.surface,
                 ),
             elevation =
