@@ -82,7 +82,7 @@ object DatabaseModule {
                                 ),
                                 ActivityTypeEntity(
                                     name = "Other",
-                                    iconRes = R.drawable.icon_other,
+                                    iconRes = R.drawable.stress_management_icon,
                                     color = 0xFF607D8B.toInt(),
                                 ),
                             )

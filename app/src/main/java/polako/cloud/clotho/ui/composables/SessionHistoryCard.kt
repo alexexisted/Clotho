@@ -6,6 +6,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,11 +27,11 @@ fun SessionHistoryCard(
     session: FocusSessionWithDuration,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    Card (
         modifier = modifier.width(160.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E2A38)),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1A3D)),
     ) {
         Box(
             modifier =
@@ -58,17 +60,18 @@ fun SessionHistoryCard(
                     verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
+                        modifier = Modifier.padding(bottom = 5.dp),
                         text = session.textDuration,
                         color = Color.White,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                     Text(
                         text = "Activity: ${session.activityType?.name}",
-                        color = Color.White.copy(alpha = 0.7f),
-                        fontSize = 12.sp,
+                        style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        color = Color.White.copy(alpha = 0.7f),
                     )
                 }
             }
@@ -76,8 +79,8 @@ fun SessionHistoryCard(
             Text(
                 text = "Score: ${session.reflectionScore} /10",
                 color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.align(Alignment.BottomEnd),
             )
         }

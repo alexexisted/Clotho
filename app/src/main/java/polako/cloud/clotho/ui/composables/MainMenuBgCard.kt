@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -42,39 +43,46 @@ fun MainMenuBgCard(
         ) {
             Text(
                 text = "Clotho App",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.displayLarge,
                 color = Color.White,
-                fontWeight = FontWeight.Bold,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Start a focus session to track your productivity and build better habits.",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.headlineLarge,
                 color = Color.White.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center,
-                lineHeight = 20.sp,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 SecondaryStatCard(
                     value = sessionsAmount.toString(),
                     label = "Sessions",
-                    modifier = Modifier.weight(0.7f),
+                    modifier = Modifier,
                 )
 
                 SecondaryStatCard(
                     value = sessionsTime,
                     label = "Focus duration",
-                    modifier = Modifier.weight(1.3f),
+                    modifier = Modifier,
                 )
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun MainMenuBgPreview() {
+    MainMenuBgCard(
+        sessionsAmount = 3,
+        sessionsTime = "45m 55s"
+    )
 }
