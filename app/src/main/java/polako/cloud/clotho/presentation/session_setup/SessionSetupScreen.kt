@@ -36,6 +36,7 @@ fun SessionSetupScreen(
     viewModel: SessionSetupViewModel = hiltViewModel(),
     sharedViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
+
     val state by viewModel.uiState.collectAsState()
 
     val gradientColors = listOf(Color(0xFF1E1A3D), Color(0xFF5D10FD))
