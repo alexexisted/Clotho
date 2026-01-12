@@ -34,7 +34,6 @@ import polako.cloud.clotho.ui.composables.ActivityItem
 fun SessionSetupScreen(
     navController: NavController,
     viewModel: SessionSetupViewModel = hiltViewModel(),
-    sharedViewModel: SharedFocusViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
 
