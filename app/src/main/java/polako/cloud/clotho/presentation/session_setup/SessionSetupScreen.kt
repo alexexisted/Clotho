@@ -1,13 +1,17 @@
 package polako.cloud.clotho.presentation.session_setup
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -72,8 +76,9 @@ fun SessionSetupScreen(
                 text = "Choose the Activity",
                 style = MaterialTheme.typography.headlineLarge,
                 color = Color.White,
-                modifier = Modifier
-                    .padding(vertical = 25.dp),
+                modifier =
+                    Modifier
+                        .padding(vertical = 25.dp),
             )
 
             LazyVerticalGrid(

@@ -51,7 +51,7 @@ fun MainScreen(
                 .background(
                     brush =
                         Brush.linearGradient(
-                            gradientColors
+                            gradientColors,
                         ),
                 ),
     ) {

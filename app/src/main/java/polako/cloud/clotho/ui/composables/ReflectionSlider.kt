@@ -1,7 +1,12 @@
 package polako.cloud.clotho.ui.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -59,9 +64,9 @@ fun ReflectionSlider(
                 value = value,
                 onValueChange = onValueChange,
                 valueRange = 1f..10f,
-//                steps = 2,
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 colors =
                     SliderDefaults.colors(
                         thumbColor = Color.White,
@@ -72,12 +77,13 @@ fun ReflectionSlider(
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewSlider() {
     ReflectionSlider(
         value = 5f,
         onValueChange = {},
-        modifier = Modifier
+        modifier = Modifier,
     )
 }

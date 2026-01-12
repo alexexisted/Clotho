@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import polako.cloud.clotho.R
@@ -38,47 +37,49 @@ fun ActivityItem(
     activity: ActivityType,
     onStartClick: () -> Unit,
 ) {
-
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         shape = RoundedCornerShape(12.dp),
         color = Color.White.copy(alpha = 0.5f),
-        border = BorderStroke(1.dp, Color.White)
+        border = BorderStroke(1.dp, Color.White),
     ) {
         Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-
             Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(Color(activity.color)),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .size(44.dp)
+                        .clip(CircleShape)
+                        .background(Color(activity.color)),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     painter = painterResource(activity.icon),
                     contentDescription = null,
                     modifier = Modifier,
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = activity.name,
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        color = Color.White
-                    )
+                    style =
+                        MaterialTheme.typography.bodyLarge.copy(
+                            color = Color.White,
+                        ),
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -86,23 +87,26 @@ fun ActivityItem(
                 Row {
 //                    Tag(text = "Personal", containerColor = Color(0xFF2D2C35))
 //                    Spacer(modifier = Modifier.width(8.dp))
-                    Tag(text = "Tags will come in v2", containerColor = Color(0xFF3B3028), textColor = Color(0xFFF4B375))
+                    Tag(
+                        text = "Tags will come in v2",
+                        containerColor = Color(0xFF3B3028),
+                        textColor = Color(0xFFF4B375),
+                    )
                 }
             }
 
             Column(
                 horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
-
                 IconButton(
                     onClick = onStartClick,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
                 ) {
                     Icon(
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = "Start",
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
             }
@@ -111,16 +115,20 @@ fun ActivityItem(
 }
 
 @Composable
-fun Tag(text: String, containerColor: Color, textColor: Color = Color.LightGray) {
+fun Tag(
+    text: String,
+    containerColor: Color,
+    textColor: Color = Color.LightGray,
+) {
     Surface(
         shape = RoundedCornerShape(8.dp),
-        color = containerColor.copy(alpha = 0.7f)
+        color = containerColor.copy(alpha = 0.7f),
     ) {
         Text(
             text = text,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
             style = MaterialTheme.typography.bodyMedium,
-            color = textColor
+            color = textColor,
         )
     }
 }
@@ -130,11 +138,12 @@ fun Tag(text: String, containerColor: Color, textColor: Color = Color.LightGray)
 fun ActivityItemPreview() {
     val icon = R.drawable.icon_barbell
     ActivityItem(
-        activity = ActivityType(
-            id = 1L,
-            name = "Gym",
-            icon = icon,
-            color = 0xFFFF7043.toInt(),
-        )
+        activity =
+            ActivityType(
+                id = 1L,
+                name = "Gym",
+                icon = icon,
+                color = 0xFFFF7043.toInt(),
+            ),
     ) { }
 }

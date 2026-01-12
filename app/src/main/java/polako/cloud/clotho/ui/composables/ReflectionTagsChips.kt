@@ -1,7 +1,6 @@
 package polako.cloud.clotho.ui.composables
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
@@ -37,7 +36,7 @@ fun ReflectionTagChips(
                         selectedContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
                         selectedLabelColor = Color.Black,
                         disabledLabelColor = Color.White,
-                        labelColor = Color.White
+                        labelColor = Color.White,
                     ),
             )
         }
@@ -51,6 +50,6 @@ fun PreviewChips() {
         tags = listOf("one", "two", "three"),
         selectedTags = listOf("one", "two", "three"),
         onTagToggle = {},
-        modifier = Modifier
+        modifier = Modifier,
     )
 }

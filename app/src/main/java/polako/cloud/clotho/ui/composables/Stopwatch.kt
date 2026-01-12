@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -46,20 +45,21 @@ fun Stopwatch(
         Text(
             text = String.format("%02d:%02d:%02d", hours, minutes, seconds),
             style = MaterialTheme.typography.displayLarge.copy(color = MaterialTheme.colorScheme.surface),
-            fontSize = 60.sp
+            fontSize = 60.sp,
         )
 
         Spacer(modifier = Modifier.padding(vertical = 70.dp))
 
         Column(
-            modifier = Modifier
+            modifier = Modifier,
         ) {
             if (isPaused) {
                 ElevatedButton(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 30.dp, vertical = 5.dp),
+                    modifier =
+                        Modifier
+                            .height(80.dp)
+                            .fillMaxWidth()
+                            .padding(horizontal = 30.dp, vertical = 5.dp),
                     shape = RoundedCornerShape(8.dp),
                     contentPadding = PaddingValues(vertical = 0.dp),
                     onClick = onStart,
@@ -83,10 +83,11 @@ fun Stopwatch(
                 }
             } else if (isRunning) {
                 ElevatedButton(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 30.dp, vertical = 5.dp),
+                    modifier =
+                        Modifier
+                            .height(80.dp)
+                            .fillMaxWidth()
+                            .padding(horizontal = 30.dp, vertical = 5.dp),
                     shape = RoundedCornerShape(8.dp),
                     contentPadding = PaddingValues(vertical = 0.dp),
                     onClick = onPause,
@@ -105,10 +106,11 @@ fun Stopwatch(
                 ) { Text(text = "Pause", style = MaterialTheme.typography.headlineLarge) }
             } else {
                 ElevatedButton(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 30.dp, vertical = 5.dp),
+                    modifier =
+                        Modifier
+                            .height(80.dp)
+                            .fillMaxWidth()
+                            .padding(horizontal = 30.dp, vertical = 5.dp),
                     shape = RoundedCornerShape(8.dp),
                     contentPadding = PaddingValues(vertical = 0.dp),
                     onClick = onStart,
@@ -127,10 +129,11 @@ fun Stopwatch(
                 ) { Text(text = "Start", style = MaterialTheme.typography.headlineLarge) }
             }
             ElevatedButton(
-                modifier = Modifier
-                    .height(80.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp, vertical = 5.dp),
+                modifier =
+                    Modifier
+                        .height(80.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp, vertical = 5.dp),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(vertical = 0.dp),
                 onClick = onStop,
@@ -159,6 +162,6 @@ fun StopwatchPreview() {
         isRunning = false,
         isPaused = false,
         onStart = {},
-        onPause = {}
+        onPause = {},
     ) { }
 }
