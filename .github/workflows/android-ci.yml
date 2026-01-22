@@ -1,36 +1,52 @@
 name: Build mommy
+#This GitHub Actions workflow is designed to automate the building
+# and releasing of an Android application.
 
+#when pr is closed and on a prod-ready branch
 on:
   pull_request:
     branches: [ mommy(prod-ready) ]
     types: [ closed ]
 
+#Each job runs in a fresh instance of the virtual environment specified by runs-on
+
 jobs:
   build:
+    #job only starts if PR was merged on a main branch exactly from dev branch
     if: |
       github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'mommy(prod-ready)' &&
       github.event.pull_request.head.ref == 'dev'
 
+    #The workflow runs on a fresh Ubuntu Linux vm
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
+      #clones repo code into the virtual machine so the workflow can access files
       - uses: actions/checkout@v3
       - name: Set up JDK
+        # installs Java 21. This is required to run gradle and build apps.
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
 
+      #ensures the system has permission to run the Gradle wrapper script
       - name: Grant Execute Permission
         run: chmod +x gradlew
 
+      #android apps must be signed with a keystore file to be installed on devices, they are added to github secrets
       - name: Decode keystore
         run: echo "${{ secrets.APK_KEY_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/keystore.jks
 
       - name: Set up signing environment
+        #redirects key to local env in a github
+        # prints result
+        #ls -ls shows permissions size and owner
+        #check to confirm the keystore file actually exists on the disk before the build starts
+        #if fails then throws an error
         run: |
           echo "APK_KEY_FILE=$GITHUB_WORKSPACE/keystore.jks" >> $GITHUB_ENV
           echo "APK_KEY_FILE=$APK_KEY_FILE"
@@ -40,6 +56,8 @@ jobs:
           echo "APK_KEY_PASSWORD=${{ secrets.APK_KEY_PASSWORD }}" >> $GITHUB_ENV
 
       - name: Create gradle.properties
+        #<<EOF > start a heredoc, which allows you to pass multiple lines of text as input to a command
+        #setting default arguments
         run: |
           cat <<EOF > $GITHUB_WORKSPACE/gradle.properties
           org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
